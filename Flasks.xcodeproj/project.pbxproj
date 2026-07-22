@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03C4217D43E0E40D8E2DD41D /* WineInstallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */; };
 		49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37E6FB6B94EA215EE46B9CA /* Runner.swift */; };
 		9ACBEC619F03749E7BF88E75 /* WineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
@@ -22,6 +23,7 @@
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
 		D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineDownloader.swift; sourceTree = "<group>"; };
 		EB70C978DEB7E3E90CA05794 /* Wine.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Wine.swift; sourceTree = "<group>"; };
+		FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = WineInstallView.swift; path = WineInstallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,11 +82,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BFB7E7A313ED66B29A8CADB8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
 		ECD01208EA3E4EAA102D8165 /* Flasks */ = {
 			isa = PBXGroup;
 			children = (
 				48CA7BE4A39D3EFC5D7D8308 /* Services */,
 				56BA02120CA0E83B2702A433 /* Models */,
+				BFB7E7A313ED66B29A8CADB8 /* Views */,
 			);
 			path = Flasks;
 			sourceTree = "<group>";
@@ -172,6 +184,7 @@
 				9ACBEC619F03749E7BF88E75 /* WineDownloader.swift in Sources */,
 				C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */,
 				49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */,
+				03C4217D43E0E40D8E2DD41D /* WineInstallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

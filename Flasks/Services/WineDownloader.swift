@@ -1,11 +1,17 @@
 import Foundation
 import SWCompression
 
+@Observable
 class WineDownloader: NSObject {
+    @ObservationIgnored
     private lazy var session = URLSession(
         configuration: .default, delegate: self, delegateQueue: nil)
+
+    @ObservationIgnored
     private let tempWineDir = try? FileManager.default.url(
         for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+    @ObservationIgnored
     private lazy var runnersDir: URL? = {
         guard
             let appSupport = try? FileManager.default.url(
@@ -17,6 +23,7 @@ class WineDownloader: NSObject {
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }()
+
     var downloadTask: URLSessionDownloadTask?
 
     var progress: Float = 0.0

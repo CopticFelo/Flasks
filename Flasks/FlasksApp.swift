@@ -27,18 +27,18 @@ class DummyConstants {
 @main
 struct FlasksApp: App {
     @State private var selectedFlask: DummyFlask.ID?
-    @State var installer = WineDownloader()
+    @State var runnerDownloadSheet = false
 
     init() {
-        guard
-            let downloadUrl = URL(
-                string:
-                    "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.13/wine-devel-11.13-osx64.tar.xz"
-            )
-        else { return }
-        print("Started download")
-        installer.untarAndInstall(
-            URL(fileURLWithPath: "/Users/felo/Library/Caches/wine-devel-11.13-osx64.tar.xz"))
+        // guard
+        //     let downloadUrl = URL(
+        //         string:
+        //             "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.13/wine-devel-11.13-osx64.tar.xz"
+        //     )
+        // else { return }
+        // print("Started download")
+        // installer.untarAndInstall(
+        //     URL(fileURLWithPath: "/Users/felo/Library/Caches/wine-devel-11.13-osx64.tar.xz"))
     }
 
     var body: some Scene {
@@ -52,15 +52,21 @@ struct FlasksApp: App {
                     .toolbar {
                         ToolbarItem(placement: .primaryAction) {
                             Button(action: {
-                                print("Add item to sidebar")
+                                runnerDownloadSheet = true
                             }) {
                                 Label("Add Item", systemImage: "plus")
                             }
                         }
                     }
-            }.setupNvimPreview {
-                ContentView(selectedFlask: $selectedFlask)
-            }
+            }.sheet(
+                isPresented: $runnerDownloadSheet,
+                content: {
+                    WineInstallView(isPresented: $runnerDownloadSheet).frame(
+                        width: 300, height: 150)
+                })
+            // .setupNvimPreview {
+            //     ContentView(selectedFlask: $selectedFlask)
+            // }
         }
     }
 }
