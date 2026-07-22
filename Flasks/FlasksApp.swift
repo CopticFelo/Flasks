@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import System
 import XcodebuildNvimPreview
 
 struct DummyFlask: Identifiable, Hashable {
@@ -26,6 +27,19 @@ class DummyConstants {
 @main
 struct FlasksApp: App {
     @State private var selectedFlask: DummyFlask.ID?
+    @State var installer = WineDownloader()
+
+    init() {
+        guard
+            let downloadUrl = URL(
+                string:
+                    "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.13/wine-devel-11.13-osx64.tar.xz"
+            )
+        else { return }
+        print("Started download")
+        installer.untarAndInstall(
+            URL(fileURLWithPath: "/Users/felo/Library/Caches/wine-devel-11.13-osx64.tar.xz"))
+    }
 
     var body: some Scene {
         Window("Flasks", id: "0") {
