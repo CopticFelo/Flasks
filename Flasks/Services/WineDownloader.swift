@@ -1,5 +1,4 @@
 import Foundation
-import SWCompression
 
 enum DownloadState {
     case extracting
