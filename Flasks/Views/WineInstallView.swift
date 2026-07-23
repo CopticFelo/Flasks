@@ -10,7 +10,6 @@ let runnerList: [String: String] = [
 struct WineInstallView: View {
     @Binding var isPresented: Bool
     @State var selectedRunner = "wine-devel-11.13"
-    @State var isDownloading = false
     var downloader = WineDownloader()
     var body: some View {
         VStack {
@@ -21,6 +20,17 @@ struct WineInstallView: View {
                 }
             }
             Spacer()
+            if downloader.state == .downloading || downloader.state == .extracting {
+                VStack {
+                    ProgressView(value: downloader.progress)
+                    if downloader.state == .downloading {
+                        Text(downloader.progress, format: .percent.precision(.fractionLength(1)))
+                    } else {
+                        Text("Extracting...")
+                    }
+                }
+            }
+            Divider()
             HStack {
                 Button(
                     action: {
@@ -39,12 +49,11 @@ struct WineInstallView: View {
                         else { return }
                         print("Started download")
                         downloader.startDownload(downloadUrl)
-                        isDownloading = true
                     },
                     label: {
                         Text("Download Runner")
                     }
-                ).disabled(isDownloading)
+                ).disabled(downloader.state == .downloading || downloader.state == .extracting)
             }
         }.padding()
     }

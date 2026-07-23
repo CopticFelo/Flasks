@@ -29,18 +29,6 @@ struct FlasksApp: App {
     @State private var selectedFlask: DummyFlask.ID?
     @State var runnerDownloadSheet = false
 
-    init() {
-        // guard
-        //     let downloadUrl = URL(
-        //         string:
-        //             "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.13/wine-devel-11.13-osx64.tar.xz"
-        //     )
-        // else { return }
-        // print("Started download")
-        // installer.untarAndInstall(
-        //     URL(fileURLWithPath: "/Users/felo/Library/Caches/wine-devel-11.13-osx64.tar.xz"))
-    }
-
     var body: some Scene {
         Window("Flasks", id: "0") {
             NavigationSplitView {
@@ -62,7 +50,7 @@ struct FlasksApp: App {
                 isPresented: $runnerDownloadSheet,
                 content: {
                     WineInstallView(isPresented: $runnerDownloadSheet).frame(
-                        width: 300, height: 150)
+                        width: 350, height: 150)
                 })
             // .setupNvimPreview {
             //     ContentView(selectedFlask: $selectedFlask)

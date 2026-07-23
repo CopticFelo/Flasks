@@ -1,6 +1,14 @@
 import Foundation
 import SWCompression
 
+enum DownloadState {
+    case extracting
+    case downloading
+    case idle
+    case complete
+    case error
+}
+
 @Observable
 class WineDownloader: NSObject {
     @ObservationIgnored
@@ -24,14 +32,17 @@ class WineDownloader: NSObject {
         return dir
     }()
 
+    @ObservationIgnored
     var downloadTask: URLSessionDownloadTask?
 
+    var state: DownloadState = .idle
     var progress: Float = 0.0
 
     func startDownload(_ url: URL) {
         let task = self.session.downloadTask(with: url)
         task.resume()
         self.downloadTask = task
+        state = .downloading
     }
     func untarAndInstall(_ path: URL) {
         guard let runnersDir else {
@@ -61,10 +72,12 @@ class WineDownloader: NSObject {
                 at: path.deletingLastPathComponent().appending(
                     path: "Wine Devel.app/Contents/Resources/wine"),
                 to: dst)
+            state = .complete
             // TODO: Cleanup
         } catch let error {
             // FIX: Error Handling for XZArchive.unarchive
             print("ERR: XZ DECOMP: ", error)
+            state = .error
         }
     }
 }
@@ -85,10 +98,12 @@ extension WineDownloader: URLSessionDownloadDelegate {
                 try FileManager.default.removeItem(at: downloadURL)
             }
             try FileManager.default.moveItem(at: location, to: downloadURL)
+            state = .extracting
             untarAndInstall(downloadURL)
         } catch let error {
             // FIX: Error Handling for Wine download
             print("ERR: WINE INSTL: ", error)
+            state = .error
         }
     }
     func urlSession(
