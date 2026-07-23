@@ -1,14 +1,23 @@
 import Foundation
 
-struct WineLibrary {
-    static var runners: [Runner] = []
+@Observable
+class WineLibrary {
+    static let shared: WineLibrary = {
+        let instance = WineLibrary()
+        instance.scan()
+        return instance
+    }()
 
-    static let runnersDir = try? FileManager.default.url(
+    var runners: [Runner] = []
+
+    @ObservationIgnored
+    let runnersDir = try? FileManager.default.url(
         for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
         create: true
     ).appending(path: "Flasks/Runners")
 
-    static func scan() {
+    func scan() {
+        runners.removeAll()
         guard let runnersDir else { return }
         guard FileManager.default.fileExists(atPath: runnersDir.path) else { return }
         do {
@@ -24,7 +33,7 @@ struct WineLibrary {
         }
     }
 
-    static func createRunnerEntry(_ dir: String) -> Runner? {
+    func createRunnerEntry(_ dir: String) -> Runner? {
         guard let runnersDir else { return nil }
         let winePath = runnersDir.appending(path: dir + "/bin/wine")
         guard FileManager.default.fileExists(atPath: winePath.path) else { return nil }
@@ -38,7 +47,7 @@ struct WineLibrary {
         return runner
     }
 
-    static func getWineVersion(_ winePath: URL) -> String? {
+    func getWineVersion(_ winePath: URL) -> String? {
         let process = Process()
         let pipe = Pipe()
         process.arguments = ["--version"]
