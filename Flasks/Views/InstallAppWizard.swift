@@ -15,7 +15,7 @@ struct InstallAppWizard: View {
                 CreateFlaskView().tabItem {
                     Text("Flask")
                 }.tag(InstallAppWizardStep.flask)
-                VStack {}.tabItem {
+                AppInstallView().tabItem {
                     Text("App")
                 }.tag(InstallAppWizardStep.app)
                 VStack {}.tabItem {
