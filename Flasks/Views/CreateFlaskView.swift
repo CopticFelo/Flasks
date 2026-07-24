@@ -33,7 +33,7 @@ struct CreateFlaskView: View {
                         Task.detached {
                             await WineLibrary.shared.scan()
                             DispatchQueue.main.async {
-                                selectedRunner = WineLibrary.shared.runners[0]
+                                selectedRunner = WineLibrary.shared.runners.first
                             }
                         }
                     }
