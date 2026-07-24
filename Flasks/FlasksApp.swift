@@ -49,8 +49,8 @@ struct FlasksApp: App {
             }.sheet(
                 isPresented: $runnerDownloadSheet,
                 content: {
-                    CreateFlaskView(isPresented: $runnerDownloadSheet).frame(
-                        width: 350, height: 200)
+                    InstallAppWizard(isPresented: $runnerDownloadSheet).frame(
+                        width: 500, height: 400)
                 })
             // .setupNvimPreview {
             //     ContentView(selectedFlask: $selectedFlask)

@@ -10,6 +10,7 @@
 		03C4217D43E0E40D8E2DD41D /* WineInstallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */; };
 		49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37E6FB6B94EA215EE46B9CA /* Runner.swift */; };
 		4A4F5DD63DF859CE8597C85E /* CreateFlaskView.swift in Resources */ = {isa = PBXBuildFile; fileRef = 0E2130D6E94D695E39947CEB /* CreateFlaskView.swift */; };
+		90D1AC62033EA95F7649389C /* InstallAppWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */; };
 		9ACBEC619F03749E7BF88E75 /* WineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
 		C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7997B499A640F8952A17B4B /* WineLibrary.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		0E2130D6E94D695E39947CEB /* CreateFlaskView.swift */ = {isa = PBXFileReference; path = CreateFlaskView.swift; sourceTree = "<group>"; };
+		8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = InstallAppWizard.swift; path = InstallAppWizard.swift; sourceTree = "<group>"; };
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68DCAD7D3C21C452AE39233 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */,
 				0E2130D6E94D695E39947CEB /* CreateFlaskView.swift */,
+				8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */,
 			);
 			name = Views;
 			path = Views;
@@ -185,6 +188,7 @@
 				C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */,
 				49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */,
 				03C4217D43E0E40D8E2DD41D /* WineInstallView.swift in Sources */,
+				90D1AC62033EA95F7649389C /* InstallAppWizard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

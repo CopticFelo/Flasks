@@ -9,7 +9,6 @@ let winVersions = [
 ]
 
 struct CreateFlaskView: View {
-    @Binding var isPresented: Bool
     @State var selectedRunner: Runner?
     @State var selectedWinVer: String = "win10"
     @State var name = ""
@@ -48,23 +47,6 @@ struct CreateFlaskView: View {
                     }.labelsHidden()
                 }
             }.padding()
-            Divider()
-            HStack {
-                Spacer()
-                Button(
-                    action: {
-                        isPresented = false
-                    },
-                    label: {
-                        Text("Cancel")
-                    })
-                Button(
-                    action: {},
-                    label: {
-                        Text("Create")
-                    }
-                )
-            }
         }.padding()
     }
 }
