@@ -25,23 +25,13 @@ struct InstallAppWizard: View {
             Divider()
             HStack {
                 Spacer()
-                if step == .flask {
-                    Button(
-                        action: {
-                            isPresented = false
-                        },
-                        label: {
-                            Text("Cancel")
-                        })
-                } else {
-                    Button(
-                        action: {
-                            prev()
-                        },
-                        label: {
-                            Text("Back")
-                        })
-                }
+                Button(
+                    action: {
+                        isPresented = false
+                    },
+                    label: {
+                        Text("Cancel")
+                    })
                 if step == .options {
                     Button(
                         action: {
@@ -68,13 +58,6 @@ struct InstallAppWizard: View {
         case .flask: step = .app
         case .app: step = .options
         case .options: step = .options
-        }
-    }
-    func prev() {
-        switch step {
-        case .flask: step = .flask
-        case .app: step = .flask
-        case .options: step = .app
         }
     }
 }
