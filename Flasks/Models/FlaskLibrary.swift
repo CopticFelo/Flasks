@@ -2,7 +2,11 @@ import Foundation
 
 @Observable
 class FlaskLibrary {
-    static let shared = FlaskLibrary()
+    static let shared: FlaskLibrary = {
+        let instance = FlaskLibrary()
+        instance.scan()
+        return instance
+    }()
 
     @ObservationIgnored
     let flasksDir = try? FileManager.default.url(
@@ -11,6 +15,34 @@ class FlaskLibrary {
     ).appending(path: "Flasks/Flasks")
 
     var flaskList: [Flask] = []
+
+    // FIX: Error handling
+    func scan() {
+        flaskList.removeAll()
+        guard let flasksDir else { return }
+        guard FileManager.default.fileExists(atPath: flasksDir.path) else { return }
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(atPath: flasksDir.path)
+            for directory in contents {
+                let flask = createFlaskEntry(directory)
+                guard let flask else { continue }
+                flaskList.append(flask)
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+
+    // FIX: Error handling
+    /// Creates a Flask entry from the JSON File included in each flask
+    func createFlaskEntry(_ path: String) -> Flask? {
+        let jsonFile = URL(string: path)?.appending(path: "/flask.json")
+        guard let jsonFile else { return nil }
+        let jsonData = try? Data(contentsOf: jsonFile)
+        guard let jsonData else { return nil }
+        let flask = try? JSONDecoder().decode(Flask.self, from: jsonData)
+        return flask
+    }
 
     // FIX: Error handling
     /// This assumes that no Flask of the same name exists
