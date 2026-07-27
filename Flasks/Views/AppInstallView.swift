@@ -7,9 +7,9 @@ enum AppType {
 }
 
 struct AppInstallView: View {
-    @State private var type: AppType = .standalone
-    @State private var path = ""
-    @State private var showFileDialog = false
+    @Binding var type: AppType
+    @Binding var path: String
+    @Binding var showFileDialog: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 20.0) {
             Spacer()

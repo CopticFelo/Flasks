@@ -9,10 +9,9 @@ let winVersions = [
 ]
 
 struct CreateFlaskView: View {
-    @State var selectedRunner: Runner?
-    @State var selectedWinVer: String = "win10"
-    @State var name = ""
-
+    @Binding var selectedRunner: Runner?
+    @Binding var selectedWinVer: String
+    @Binding var name: String
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 20.0) {
