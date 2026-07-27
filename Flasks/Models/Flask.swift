@@ -1,6 +1,5 @@
 import Foundation
 
-// TODO: JSON Encode/Decode
 struct Flask: Codable {
     var registeredApps: [URL]
     let runner: Runner

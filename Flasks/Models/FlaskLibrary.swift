@@ -23,16 +23,20 @@ class FlaskLibrary {
             create: true
         )
         guard let appSupport else { return nil }
-        let dir = appSupport.appending(path: "Flasks/Flasks/\(name)")
+        let prefixDir = appSupport.appending(path: "Flasks/Flasks/\(name)")
         do {
-            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            try FileManager.default.createDirectory(
+                at: prefixDir, withIntermediateDirectories: true)
             let env = [
-                "WINEPREFIX": dir.path
+                "WINEPREFIX": prefixDir.path
             ]
             process.environment = env
             try process.run()
             process.waitUntilExit()
-            let flask = Flask(registeredApps: [], runner: runner, path: dir, name: name)
+            let flask = Flask(registeredApps: [], runner: runner, path: prefixDir, name: name)
+            let jsonData = try JSONEncoder().encode(flask)
+            // TODO: Maybe add a warning to the top to not delete this file
+            try jsonData.write(to: prefixDir.appending(path: "/flask.json"), options: .atomic)
             return flask
         } catch let error {
             print(error)
