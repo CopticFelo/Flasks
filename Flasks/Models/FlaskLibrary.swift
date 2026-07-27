@@ -24,14 +24,19 @@ class FlaskLibrary {
         )
         guard let appSupport else { return nil }
         let dir = appSupport.appending(path: "Flasks/Flasks/\(name)")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let env = [
-            "WINEPREFIX": dir.path
-        ]
-        process.environment = env
-        try? process.run()
-        process.waitUntilExit()
-        let flask = Flask(registeredApps: [], runner: runner, path: dir, name: name)
-        return flask
+        do {
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let env = [
+                "WINEPREFIX": dir.path
+            ]
+            process.environment = env
+            try process.run()
+            process.waitUntilExit()
+            let flask = Flask(registeredApps: [], runner: runner, path: dir, name: name)
+            return flask
+        } catch let error {
+            print(error)
+            return nil
+        }
     }
 }
