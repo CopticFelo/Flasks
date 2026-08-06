@@ -2,12 +2,6 @@ import Foundation
 
 @Observable
 class WineLibrary {
-    static let shared: WineLibrary = {
-        let instance = WineLibrary()
-        instance.scan()
-        return instance
-    }()
-
     var runners: [Runner] = []
 
     @ObservationIgnored

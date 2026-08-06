@@ -26,8 +26,18 @@ class DummyConstants {
 
 @main
 struct FlasksApp: App {
+    @State private var flaskLibrary = FlaskLibrary()
+
+    // TODO: This instance is not actually need in this view, consider alternative locations
+    @State private var runnerLibrary = WineLibrary()
+
     @State private var selectedFlask: DummyFlask.ID?
     @State var runnerDownloadSheet = false
+
+    init() {
+        flaskLibrary.scan()
+        runnerLibrary.scan()
+    }
 
     var body: some Scene {
         Window("Flasks", id: "0") {

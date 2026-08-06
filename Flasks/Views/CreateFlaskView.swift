@@ -9,6 +9,8 @@ let winVersions = [
 ]
 
 struct CreateFlaskView: View {
+    @Environment(WineLibrary.self) private var runnerLibrary
+
     @Binding var selectedRunner: Runner?
     @Binding var selectedWinVer: String
     @Binding var name: String
@@ -24,14 +26,14 @@ struct CreateFlaskView: View {
                     Text("Runner")
                     Spacer()
                     Picker("Runner", selection: $selectedRunner) {
-                        ForEach(WineLibrary.shared.runners) { runner in
+                        ForEach(runnerLibrary.runners) { runner in
                             Text(runner.name ?? "Unknown").tag(runner)
                         }
                     }.labelsHidden().task {
                         Task.detached {
-                            await WineLibrary.shared.scan()
+                            await runnerLibrary.scan()
                             DispatchQueue.main.async {
-                                selectedRunner = WineLibrary.shared.runners.first
+                                selectedRunner = runnerLibrary.runners.first
                             }
                         }
                     }

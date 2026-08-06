@@ -2,12 +2,6 @@ import Foundation
 
 @Observable
 class FlaskLibrary {
-    static let shared: FlaskLibrary = {
-        let instance = FlaskLibrary()
-        instance.scan()
-        return instance
-    }()
-
     @ObservationIgnored
     let flasksDir = try? FileManager.default.url(
         for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,

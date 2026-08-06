@@ -7,6 +7,8 @@ enum InstallAppWizardStep: Int, CaseIterable {
 }
 
 struct InstallAppWizard: View {
+    @Environment(FlaskLibrary.self) private var flaskLibrary
+
     @Binding var isPresented: Bool
     @State private var step: InstallAppWizardStep = .flask
 
@@ -46,10 +48,10 @@ struct InstallAppWizard: View {
                     Button(
                         action: {
                             guard let selectedRunner else { return }
-                            let flask = FlaskLibrary.shared.createFlask(
+                            let flask = flaskLibrary.createFlask(
                                 selectedRunner, name: name, windowsString: selectedWinVer)
                             guard let flask else { return }
-                            FlaskLibrary.shared.flaskList.append(flask)
+                            flaskLibrary.flaskList.append(flask)
                             isPresented = false
                         },
                         label: {
