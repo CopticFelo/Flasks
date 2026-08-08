@@ -36,7 +36,6 @@ struct FlasksApp: App {
 
     init() {
         try? flaskLibrary.scan()
-        try? runnerLibrary.scan()
     }
 
     var body: some Scene {
@@ -55,6 +54,9 @@ struct FlasksApp: App {
                                 Label("Add Item", systemImage: "plus")
                             }
                         }
+                    }.task {
+                        // HACK: This is sorta not good
+                        try? await runnerLibrary.scan()
                     }
             }.sheet(
                 isPresented: $runnerDownloadSheet,
