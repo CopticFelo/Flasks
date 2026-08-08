@@ -6,7 +6,7 @@ import System
 class WineLibrary {
     var runners: [Runner] = []
 
-    func scan() throws {
+    func scan() async throws {
         do {
             let runnersDir = try FileManager.default.url(
                 for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
@@ -16,7 +16,7 @@ class WineLibrary {
             let contents = try FileManager.default.contentsOfDirectory(atPath: runnersDir.path)
             runners.removeAll()
             for directory in contents {
-                let runnerEntry = createRunnerEntry(directory, runnersDir: runnersDir)
+                let runnerEntry = await createRunnerEntry(directory, runnersDir: runnersDir)
                 guard let runnerEntry else { continue }
                 runners.append(runnerEntry)
             }
@@ -25,10 +25,10 @@ class WineLibrary {
         }
     }
 
-    func createRunnerEntry(_ dir: String, runnersDir: URL) -> Runner? {
+    func createRunnerEntry(_ dir: String, runnersDir: URL) async -> Runner? {
         let binPath = runnersDir.appending(path: dir + "/bin")
         guard FileManager.default.fileExists(atPath: binPath.path) else { return nil }
-        let wineVersion = getWineVersion(binPath.appending(path: "/wine"))
+        let wineVersion = await getWineVersion(binPath.appending(path: "/wine"))
         guard let wineVersion else { return nil }
         let runner = Runner(
             name: dir, binPath: binPath,
@@ -37,18 +37,20 @@ class WineLibrary {
     }
 
     func getWineVersion(_ winePath: URL) async -> String? {
-        let process = Process()
-        let pipe = Pipe()
-        process.arguments = ["--version"]
-        process.executableURL = winePath
-        process.standardOutput = pipe
-        process.standardError = pipe
         do {
             let result = try await run(
                 .path(FilePath(winePath.path)),
                 arguments: ["--version"],
                 output: .string(limit: 4096)
             )
+            switch result.terminationStatus {
+            case .exited(let code):
+                if code != 0 {
+                    throw FlaskError.wineError(detail: "Process exited with code \(code)")
+                }
+            case .signaled(let code):
+                throw FlaskError.wineError(detail: "Process terminated with signal \(code)")
+            }
             return result.standardOutput
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         } catch let error {
