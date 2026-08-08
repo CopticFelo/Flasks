@@ -1,4 +1,6 @@
 import Foundation
+import Subprocess
+import System
 
 @Observable
 class FlaskLibrary {
@@ -40,10 +42,8 @@ class FlaskLibrary {
 
     // FIX: Error handling
     /// This assumes that no Flask of the same name exists
-    func createFlask(_ runner: Runner, name: String, windowsString: String) -> Flask? {
+    func createFlask(_ runner: Runner, name: String, windowsString: String) async -> Flask? {
         /// FIX: Windows Version ignored (requires winecfg)
-        let process = Process()
-        process.executableURL = runner.binPath.appending(path: "/wineboot")
         let appSupport = try? FileManager.default.url(
             for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
             create: true
@@ -53,12 +53,14 @@ class FlaskLibrary {
         do {
             try FileManager.default.createDirectory(
                 at: prefixDir, withIntermediateDirectories: true)
-            let env = [
+            let env = Environment.custom([
                 "WINEPREFIX": prefixDir.path
-            ]
-            process.environment = env
-            try process.run()
-            process.waitUntilExit()
+            ])
+            try await run(
+                .path(FilePath(runner.binPath.appending(path: "/wineboot").path)),
+                environment: env,
+                output: .discarded
+            )
             let flask = Flask(registeredApps: [], runner: runner, path: prefixDir, name: name)
             let jsonData = try JSONEncoder().encode(flask)
             // TODO: Maybe add a warning to the top to not delete this file

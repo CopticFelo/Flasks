@@ -1,4 +1,6 @@
 import Foundation
+import Subprocess
+import System
 
 struct Flask: Codable {
     var registeredApps: [URL]
@@ -10,20 +12,17 @@ struct Flask: Codable {
         registeredApps.append(path)
     }
 
-    func runApp(_ exePath: URL) {
-        let process = Process()
-        process.executableURL = runner.binPath.appending(path: "/wine")
-        let env = [
+    func runApp(_ exePath: URL) async {
+        let env = Environment.custom([
             "WINEPREFIX": path.path
-        ]
-        process.environment = env
-        process.arguments = [exePath.path]
-        process.qualityOfService = .userInteractive
+        ])
         do {
-            try process.run()
-            Task.detached {
-                process.waitUntilExit()
-            }
+            try await run(
+                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
+                arguments: [exePath.path],
+                environment: env,
+                output: .discarded
+            )
         } catch let error {
             // FIX: Error handling
             print(error)
