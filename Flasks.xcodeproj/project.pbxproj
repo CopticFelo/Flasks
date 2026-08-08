@@ -19,6 +19,7 @@
 		C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7997B499A640F8952A17B4B /* WineLibrary.swift */; };
 		C4F768208EB8838CB2807BA8 /* Flask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8980E62B1EBD84DDF15CCC /* Flask.swift */; };
 		CCC1F7902E190403BB38D836 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B68DCAD7D3C21C452AE39233 /* .gitignore */; };
+		D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +33,8 @@
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
 		D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineDownloader.swift; sourceTree = "<group>"; };
-		FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineInstallView.swift; sourceTree = "<group>"; };
+		DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = FlaskError.swift; path = FlaskError.swift; sourceTree = "<group>"; };
+		FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = WineInstallView.swift; path = WineInstallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -71,6 +73,7 @@
 				C37E6FB6B94EA215EE46B9CA /* Runner.swift */,
 				8E7C9619C657C8F97BD62219 /* FlaskLibrary.swift */,
 				6B8980E62B1EBD84DDF15CCC /* Flask.swift */,
+				DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				90D1AC62033EA95F7649389C /* InstallAppWizard.swift in Sources */,
 				8CDFBA1DF6C9365734242EB6 /* AppInstallView.swift in Sources */,
 				C4F768208EB8838CB2807BA8 /* Flask.swift in Sources */,
+				D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,11 +1,11 @@
 import Foundation
+import os
 
 enum DownloadState {
     case extracting
     case downloading
     case idle
     case complete
-    case error
 }
 
 @Observable
@@ -15,27 +15,21 @@ class WineDownloader: NSObject {
         configuration: .default, delegate: self, delegateQueue: nil)
 
     @ObservationIgnored
-    private let tempWineDir = try? FileManager.default.url(
-        for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-
-    @ObservationIgnored
-    private lazy var runnersDir: URL? = {
-        guard
-            let appSupport = try? FileManager.default.url(
-                for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
-                create: true
-            )
-        else { return nil }
-        let dir = appSupport.appending(path: "Flasks/Runners")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir
-    }()
-
-    @ObservationIgnored
     var downloadTask: URLSessionDownloadTask?
 
     var state: DownloadState = .idle
+    var error: FlaskError?
     var progress: Float = 0.0
+
+    private func getRunnersDir() throws -> URL {
+        let appSupport = try FileManager.default.url(
+            for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
+            create: true
+        )
+        let dir = appSupport.appending(path: "Flasks/Runners")
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
 
     func startDownload(_ url: URL) {
         let task = self.session.downloadTask(with: url)
@@ -44,24 +38,22 @@ class WineDownloader: NSObject {
         state = .downloading
     }
     func untarAndInstall(_ path: URL) {
-        guard let runnersDir else {
-            // FIX: Silent failures
-            return
-        }
         do {
             let untarProcess = Process()
             untarProcess.executableURL = URL(fileURLWithPath: "/usr/bin/tar")
             untarProcess.arguments = [
                 "-xf", path.path, "-C", path.deletingLastPathComponent().path,
             ]
+
             print("Extracting........")
-            try untarProcess.run()
+            try untarProcess.run()  // throws CocoaError
             untarProcess.waitUntilExit()
-            // FIX: Check for decompression failure
+
             print("Moving.........")
-            let dst = runnersDir.appending(
+            let dst = try getRunnersDir().appending(
                 path: path.deletingPathExtension().deletingPathExtension().lastPathComponent
             )
+
             if FileManager.default.fileExists(
                 atPath: dst.path)
             {
@@ -73,36 +65,79 @@ class WineDownloader: NSObject {
                 to: dst)
             state = .complete
             // TODO: Cleanup
-        } catch let error {
-            // FIX: Error Handling for XZArchive.unarchive
-            print("ERR: XZ DECOMP: ", error)
-            state = .error
+        } catch let error as CocoaError {
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = .fileError(detail: error)
+            }
+        } catch let error as NSError {
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = .processError(detail: error)
+            }
         }
     }
 }
 
 extension WineDownloader: URLSessionDownloadDelegate {
     func urlSession(
+        _ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?
+    ) {
+        guard let networkError = error as? URLError else { return }
+        if networkError.code == .cancelled {
+            return
+        }
+        DispatchQueue.main.async {
+            self.state = .idle
+            self.error = FlaskError.networkError(detail: networkError)
+        }
+    }
+    func urlSession(
         _ session: URLSession,
         downloadTask: URLSessionDownloadTask,
         didFinishDownloadingTo location: URL
     ) {
         do {
-            guard let downloadDir = tempWineDir else { return }
-            guard let filename = downloadTask.response?.suggestedFilename else {
+            // gaurding against stupid http errors :<
+            guard let response = downloadTask.response as? HTTPURLResponse else {
+                self.state = .idle
+                self.error = FlaskError.invalidResponseError
                 return
             }
-            let downloadURL = downloadDir.appendingPathComponent(filename)
+            guard (200...299).contains(response.statusCode) else {
+                self.state = .idle
+                self.error = FlaskError.serverError(code: response.statusCode)
+                return
+            }
+
+            let filename =
+                response.suggestedFilename ?? "unknown-wine-\(UUID().uuidString.prefix(4)).tar.xz"
+            let downloadURL = try FileManager.default.url(
+                for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true
+            )
+            .appendingPathComponent(filename)
+
             if FileManager.default.fileExists(atPath: downloadURL.path) {
                 try FileManager.default.removeItem(at: downloadURL)
             }
             try FileManager.default.moveItem(at: location, to: downloadURL)
-            state = .extracting
+
+            DispatchQueue.main.async {
+                self.state = .extracting
+            }
+
             untarAndInstall(downloadURL)
-        } catch let error {
-            // FIX: Error Handling for Wine download
-            print("ERR: WINE INSTL: ", error)
-            state = .error
+        } catch let error as FlaskError {
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = error
+            }
+        } catch {
+            let cocoaError = error as? CocoaError ?? CocoaError(.fileWriteUnknown)
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = FlaskError.fileError(detail: cocoaError)
+            }
         }
     }
     func urlSession(

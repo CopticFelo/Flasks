@@ -35,8 +35,8 @@ struct FlasksApp: App {
     @State var runnerDownloadSheet = false
 
     init() {
-        flaskLibrary.scan()
-        runnerLibrary.scan()
+        try? flaskLibrary.scan()
+        try? runnerLibrary.scan()
     }
 
     var body: some Scene {

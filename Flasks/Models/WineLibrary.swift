@@ -4,31 +4,26 @@ import Foundation
 class WineLibrary {
     var runners: [Runner] = []
 
-    @ObservationIgnored
-    let runnersDir = try? FileManager.default.url(
-        for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
-        create: true
-    ).appending(path: "Flasks/Runners")
-
-    func scan() {
-        runners.removeAll()
-        guard let runnersDir else { return }
-        guard FileManager.default.fileExists(atPath: runnersDir.path) else { return }
+    func scan() throws {
         do {
+            let runnersDir = try FileManager.default.url(
+                for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
+                create: true
+            ).appending(path: "Flasks/Runners")
+            guard FileManager.default.fileExists(atPath: runnersDir.path) else { return }
             let contents = try FileManager.default.contentsOfDirectory(atPath: runnersDir.path)
+            runners.removeAll()
             for directory in contents {
-                let runnerEntry = createRunnerEntry(directory)
+                let runnerEntry = createRunnerEntry(directory, runnersDir: runnersDir)
                 guard let runnerEntry else { continue }
                 runners.append(runnerEntry)
             }
-        } catch let error {
-            // FIX: Error handling
-            print("ERR: Cannot querry runners directory: ", error)
+        } catch let error as CocoaError {
+            throw FlaskError.fileError(detail: error)
         }
     }
 
-    func createRunnerEntry(_ dir: String) -> Runner? {
-        guard let runnersDir else { return nil }
+    func createRunnerEntry(_ dir: String, runnersDir: URL) -> Runner? {
         let binPath = runnersDir.appending(path: dir + "/bin")
         guard FileManager.default.fileExists(atPath: binPath.path) else { return nil }
         let wineVersion = getWineVersion(binPath.appending(path: "/wine"))
@@ -53,7 +48,7 @@ class WineLibrary {
             return String(data: data, encoding: .utf8)?
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         } catch let error {
-            print("ERR: Wine version? \n", error)
+            print("WARN: Invalid Wine install at \(winePath.path) \n", error)
             return nil
         }
     }

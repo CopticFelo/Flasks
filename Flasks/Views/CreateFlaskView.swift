@@ -31,7 +31,7 @@ struct CreateFlaskView: View {
                         }
                     }.labelsHidden().task {
                         Task.detached {
-                            await runnerLibrary.scan()
+                            try? await runnerLibrary.scan()
                             DispatchQueue.main.async {
                                 selectedRunner = runnerLibrary.runners.first
                             }
