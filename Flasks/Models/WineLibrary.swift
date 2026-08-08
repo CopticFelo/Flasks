@@ -1,4 +1,6 @@
 import Foundation
+import Subprocess
+import System
 
 @Observable
 class WineLibrary {
@@ -34,7 +36,7 @@ class WineLibrary {
         return runner
     }
 
-    func getWineVersion(_ winePath: URL) -> String? {
+    func getWineVersion(_ winePath: URL) async -> String? {
         let process = Process()
         let pipe = Pipe()
         process.arguments = ["--version"]
@@ -42,10 +44,12 @@ class WineLibrary {
         process.standardOutput = pipe
         process.standardError = pipe
         do {
-            try process.run()
-            process.waitUntilExit()
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            return String(data: data, encoding: .utf8)?
+            let result = try await run(
+                .path(FilePath(winePath.path)),
+                arguments: ["--version"],
+                output: .string(limit: 4096)
+            )
+            return result.standardOutput
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         } catch let error {
             print("WARN: Invalid Wine install at \(winePath.path) \n", error)
