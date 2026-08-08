@@ -1,4 +1,6 @@
 import Foundation
+import Subprocess
+import System
 import os
 
 enum DownloadState {
@@ -37,17 +39,24 @@ class WineDownloader: NSObject {
         self.downloadTask = task
         state = .downloading
     }
-    func untarAndInstall(_ path: URL) {
+    func untarAndInstall(_ path: URL) async {
         do {
-            let untarProcess = Process()
-            untarProcess.executableURL = URL(fileURLWithPath: "/usr/bin/tar")
-            untarProcess.arguments = [
-                "-xf", path.path, "-C", path.deletingLastPathComponent().path,
-            ]
-
             print("Extracting........")
-            try untarProcess.run()  // throws CocoaError
-            untarProcess.waitUntilExit()
+            let result = try await run(
+                .path("/usr/bin/tar"),
+                arguments: [
+                    "-xf", path.path, "-C", path.deletingLastPathComponent().path,
+                ],
+                output: .discarded
+            )
+            switch result.terminationStatus {
+            case .exited(let code):
+                if code != 0 {
+                    throw FlaskError.wineError(detail: "Process exited with code \(code)")
+                }
+            case .signaled(let code):
+                throw FlaskError.wineError(detail: "Process terminated with signal \(code)")
+            }
 
             print("Moving.........")
             let dst = try getRunnersDir().appending(
@@ -65,15 +74,25 @@ class WineDownloader: NSObject {
                 to: dst)
             state = .complete
             // TODO: Cleanup
+        } catch let error as SubprocessError {
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = .processError(detail: error)
+            }
         } catch let error as CocoaError {
             DispatchQueue.main.async {
                 self.state = .idle
                 self.error = .fileError(detail: error)
             }
-        } catch let error as NSError {
+        } catch let error as FlaskError {
             DispatchQueue.main.async {
                 self.state = .idle
-                self.error = .processError(detail: error)
+                self.error = error
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.state = .idle
+                self.error = FlaskError.unknownError
             }
         }
     }
@@ -126,7 +145,9 @@ extension WineDownloader: URLSessionDownloadDelegate {
                 self.state = .extracting
             }
 
-            untarAndInstall(downloadURL)
+            Task {
+                await untarAndInstall(downloadURL)
+            }
         } catch let error as FlaskError {
             DispatchQueue.main.async {
                 self.state = .idle
