@@ -2,7 +2,8 @@ import Foundation
 import Subprocess
 import System
 
-struct Flask: Codable {
+struct Flask: Codable, Identifiable {
+    var id = UUID()
     var registeredApps: [URL]
     let runner: Runner
     let path: URL

@@ -8,14 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var selectedFlask: DummyFlask.ID?
+    @Binding var selectedFlask: Flask.ID?
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text(
-                DummyConstants.flaskList.first(where: { $0.id == selectedFlask })?.name ?? "Nuh uh")
         }
     }
 }

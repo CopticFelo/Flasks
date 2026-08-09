@@ -9,36 +9,17 @@ import SwiftUI
 import System
 import XcodebuildNvimPreview
 
-struct DummyFlask: Identifiable, Hashable {
-    let name: String
-    let id = UUID()
-}
-
-class DummyConstants {
-    static var flaskList = [
-        DummyFlask(name: "All"),
-        DummyFlask(name: "General"),
-        DummyFlask(name: "Omor"),
-        DummyFlask(name: "GTAV"),
-        DummyFlask(name: "Office"),
-    ]
-}
-
 @main
 struct FlasksApp: App {
     @State private var flaskLibrary = FlaskLibrary()
 
-    @State private var selectedFlask: DummyFlask.ID?
+    @State private var selectedFlask: Flask.ID?
     @State var runnerDownloadSheet = false
-
-    init() {
-        try? flaskLibrary.scan()
-    }
 
     var body: some Scene {
         Window("Flasks", id: "0") {
             NavigationSplitView {
-                List(DummyConstants.flaskList, selection: $selectedFlask) {
+                List(flaskLibrary.flaskList, selection: $selectedFlask) {
                     Text($0.name)
                 }.navigationTitle("Flasks")
             } detail: {
@@ -60,6 +41,9 @@ struct FlasksApp: App {
                     ).environment(flaskLibrary)
                 }
             )
+            // .task {
+            //     try? flaskLibrary.scan()
+            // }
             // .setupNvimPreview {
             //     ContentView(selectedFlask: $selectedFlask)
             // }

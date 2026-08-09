@@ -6,6 +6,11 @@ import System
 class FlaskLibrary {
     var flaskList: [Flask] = []
 
+    init() {
+        // FIX: Error handling (oh no not again)
+        try? self.scan()
+    }
+
     func scan() throws {
         let flasksDir = try? FileManager.default.url(
             for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil,
