@@ -8,6 +8,7 @@ enum InstallAppWizardStep: Int, CaseIterable {
 
 struct InstallAppWizard: View {
     @Environment(FlaskLibrary.self) private var flaskLibrary
+    @State private var runnerLibrary = WineLibrary()
 
     @Binding var isPresented: Bool
     @State private var step: InstallAppWizardStep = .flask
@@ -26,6 +27,7 @@ struct InstallAppWizard: View {
         VStack {
             TabView(selection: $step) {
                 CreateFlaskView(
+                    runnerLibrary: $runnerLibrary,
                     selectedRunner: $selectedRunner, selectedWinVer: $selectedWinVer, name: $name
                 ).tabItem {
                     Text("Flask")
@@ -89,7 +91,12 @@ struct InstallAppWizard: View {
                     ).disabled(isCreating)
                 }
             }
-        }.padding()
+        }.padding().task {
+            try? await runnerLibrary.scan()
+            DispatchQueue.main.async {
+                selectedRunner = runnerLibrary.runners.first
+            }
+        }
     }
     func next() {
         switch step {

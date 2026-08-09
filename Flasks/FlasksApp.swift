@@ -28,9 +28,6 @@ class DummyConstants {
 struct FlasksApp: App {
     @State private var flaskLibrary = FlaskLibrary()
 
-    // TODO: This instance is not actually need in this view, consider alternative locations
-    @State private var runnerLibrary = WineLibrary()
-
     @State private var selectedFlask: DummyFlask.ID?
     @State var runnerDownloadSheet = false
 
@@ -54,16 +51,13 @@ struct FlasksApp: App {
                                 Label("Add Item", systemImage: "plus")
                             }
                         }
-                    }.task {
-                        // HACK: This is sorta not good
-                        try? await runnerLibrary.scan()
                     }
             }.sheet(
                 isPresented: $runnerDownloadSheet,
                 content: {
                     InstallAppWizard(isPresented: $runnerDownloadSheet).frame(
                         width: 500, height: 400
-                    ).environment(flaskLibrary).environment(runnerLibrary)
+                    ).environment(flaskLibrary)
                 }
             )
             // .setupNvimPreview {
