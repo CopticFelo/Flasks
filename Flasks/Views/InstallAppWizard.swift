@@ -19,6 +19,9 @@ struct InstallAppWizard: View {
     @State var type: AppType = .standalone
     @State var path = ""
     @State var showFileDialog = false
+
+    @State var error: FlaskError?
+    @State var isCreating = false
     var body: some View {
         VStack {
             TabView(selection: $step) {
@@ -30,7 +33,15 @@ struct InstallAppWizard: View {
                 AppInstallView(type: $type, path: $path, showFileDialog: $showFileDialog).tabItem {
                     Text("App")
                 }.tag(InstallAppWizardStep.app)
-                VStack {}.tabItem {
+                VStack {
+                    Spacer()
+                    if let error = error {
+                        Text("\(error.localizedDescription)").foregroundStyle(.red).fontWeight(
+                            .semibold)
+                    } else if isCreating {
+                        ProgressView().progressViewStyle(.linear).padding()
+                    }
+                }.tabItem {
                     Text("Options")
                 }.tag(InstallAppWizardStep.options)
             }
@@ -47,12 +58,21 @@ struct InstallAppWizard: View {
                 if step == .options {
                     Button(
                         action: {
-                            guard let selectedRunner else { return }
-                            let flask = flaskLibrary.createFlask(
-                                selectedRunner, name: name, windowsString: selectedWinVer)
-                            guard let flask else { return }
-                            flaskLibrary.flaskList.append(flask)
-                            isPresented = false
+                            // TODO: Handle empty fields
+                            Task {
+                                error = nil
+                                guard let selectedRunner else { return }
+                                do {
+                                    isCreating = true
+                                    let flask = try await flaskLibrary.createFlask(
+                                        selectedRunner, name: name, windowsString: selectedWinVer)
+                                    flaskLibrary.flaskList.append(flask)
+                                    isPresented = false
+                                } catch let flaskError as FlaskError {
+                                    isCreating = false
+                                    self.error = flaskError
+                                }
+                            }
                         },
                         label: {
                             Text("Create")
@@ -66,7 +86,7 @@ struct InstallAppWizard: View {
                         label: {
                             Text("Next")
                         }
-                    )
+                    ).disabled(isCreating)
                 }
             }
         }.padding()
