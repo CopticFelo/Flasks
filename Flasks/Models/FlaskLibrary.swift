@@ -17,7 +17,7 @@ class FlaskLibrary {
         do {
             let contents = try FileManager.default.contentsOfDirectory(atPath: flasksDir.path)
             for directory in contents {
-                let flask = createFlaskEntry(directory)
+                let flask = createFlaskEntry(flasksDir.appending(path: directory))
                 guard let flask else { continue }
                 flaskList.append(flask)
             }
@@ -28,9 +28,8 @@ class FlaskLibrary {
     }
 
     /// Creates a Flask entry from the JSON File included in each flask
-    func createFlaskEntry(_ path: String) -> Flask? {
-        let jsonFile = URL(string: path)?.appending(path: "/flask.json")
-        guard let jsonFile else { return nil }
+    func createFlaskEntry(_ path: URL) -> Flask? {
+        let jsonFile = path.appending(path: "/flask.json")
         let jsonData = try? Data(contentsOf: jsonFile)
         guard let jsonData else { return nil }
         let flask = try? JSONDecoder().decode(Flask.self, from: jsonData)
