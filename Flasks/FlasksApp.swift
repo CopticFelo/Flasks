@@ -62,8 +62,10 @@ struct FlasksApp: App {
                 isPresented: $runnerDownloadSheet,
                 content: {
                     InstallAppWizard(isPresented: $runnerDownloadSheet).frame(
-                        width: 500, height: 400)
-                })
+                        width: 500, height: 400
+                    ).environment(flaskLibrary).environment(runnerLibrary)
+                }
+            )
             // .setupNvimPreview {
             //     ContentView(selectedFlask: $selectedFlask)
             // }
