@@ -11,21 +11,18 @@ struct SelectProgramView: View {
     @Binding var path: String
     @Binding var showFileDialog: Bool
     var body: some View {
-        VStack(alignment: .leading, spacing: 20.0) {
-            Spacer()
+        Form {
             Picker("App Type", selection: $type) {
                 Text("Standalone (Portable)").tag(AppType.standalone)
                 Text("Installer").tag(AppType.install)
             }
             HStack {
-                Text("Path to .exe")
                 TextField("Path", text: $path)
                 Button("Browse") {
                     showFileDialog = true
                 }
             }
-            Spacer()
-        }.padding().fileImporter(
+        }.formStyle(.grouped).scrollContentBackground(.hidden).padding().fileImporter(
             isPresented: $showFileDialog, allowedContentTypes: [.exe],
             allowsMultipleSelection: false
         ) { result in

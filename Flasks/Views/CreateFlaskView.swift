@@ -15,32 +15,18 @@ struct CreateFlaskView: View {
     @Binding var selectedWinVer: String
     @Binding var name: String
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 20.0) {
-                HStack {
-                    Text("Name")
-                    Spacer()
-                    TextField("Flask name", text: $name)
+        Form {
+            TextField("Flask name", text: $name)
+            Picker("Runner", selection: $selectedRunner) {
+                ForEach(runnerLibrary.runners) { runner in
+                    Text(runner.name ?? "Unknown").tag(runner)
                 }
-                HStack {
-                    Text("Runner")
-                    Spacer()
-                    Picker("Runner", selection: $selectedRunner) {
-                        ForEach(runnerLibrary.runners) { runner in
-                            Text(runner.name ?? "Unknown").tag(runner)
-                        }
-                    }.labelsHidden()
+            }
+            Picker("Windows version", selection: $selectedWinVer) {
+                ForEach(winVersions.keys.sorted(), id: \.self) { key in
+                    Text(winVersions[key]!).tag(key)
                 }
-                HStack {
-                    Text("Windows version")
-                    Spacer()
-                    Picker("Windows version", selection: $selectedWinVer) {
-                        ForEach(winVersions.keys.sorted(), id: \.self) { key in
-                            Text(winVersions[key]!).tag(key)
-                        }
-                    }.labelsHidden()
-                }
-            }.padding()
-        }.padding()
+            }
+        }.formStyle(.grouped).scrollContentBackground(.hidden)
     }
 }

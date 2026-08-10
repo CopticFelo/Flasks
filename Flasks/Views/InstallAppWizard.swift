@@ -48,56 +48,65 @@ struct InstallAppWizard: View {
                     Text("Options")
                 }.tag(InstallAppWizardStep.options)
             }
-            Divider()
-            HStack {
-                Spacer()
-                Button(
-                    action: {
-                        isPresented = false
-                    },
-                    label: {
-                        Text("Cancel")
-                    })
-                if step == .options {
+            // Divider()
+            // HStack {
+            //     Spacer()
+            // }
+        }.padding()
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(
                         action: {
-                            // TODO: Handle empty fields
-                            Task {
-                                error = nil
-                                guard let selectedRunner else { return }
-                                do {
-                                    isCreating = true
-                                    let flask = try await flaskLibrary.createFlask(
-                                        selectedRunner, name: name, windowsString: selectedWinVer)
-                                    flaskLibrary.flaskList.append(flask)
-                                    isPresented = false
-                                } catch let flaskError as FlaskError {
-                                    isCreating = false
-                                    self.error = flaskError
+                            isPresented = false
+                        },
+                        label: {
+                            Text("Cancel")
+                        }
+                    ).keyboardShortcut(.cancelAction)
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    if step == .options {
+                        Button(
+                            action: {
+                                // TODO: Handle empty fields
+                                Task {
+                                    error = nil
+                                    guard let selectedRunner else { return }
+                                    do {
+                                        isCreating = true
+                                        let flask = try await flaskLibrary.createFlask(
+                                            selectedRunner, name: name,
+                                            windowsString: selectedWinVer)
+                                        flaskLibrary.flaskList.append(flask)
+                                        isPresented = false
+                                    } catch let flaskError as FlaskError {
+                                        isCreating = false
+                                        self.error = flaskError
+                                    }
                                 }
+                            },
+                            label: {
+                                Text("Create")
                             }
-                        },
-                        label: {
-                            Text("Create")
-                        }
-                    )
-                } else {
-                    Button(
-                        action: {
-                            next()
-                        },
-                        label: {
-                            Text("Next")
-                        }
-                    ).disabled(isCreating)
+                        )
+                    } else {
+                        Button(
+                            action: {
+                                next()
+                            },
+                            label: {
+                                Text("Next")
+                            }
+                        ).disabled(isCreating || name.isEmpty)
+                    }
                 }
             }
-        }.padding().task {
-            try? await runnerLibrary.scan()
-            DispatchQueue.main.async {
-                selectedRunner = runnerLibrary.runners.first
+            .task {
+                try? await runnerLibrary.scan()
+                DispatchQueue.main.async {
+                    selectedRunner = runnerLibrary.runners.first
+                }
             }
-        }
     }
     func next() {
         switch step {
