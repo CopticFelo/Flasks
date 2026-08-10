@@ -6,7 +6,7 @@ enum AppType {
     case standalone
 }
 
-struct AppInstallView: View {
+struct SelectProgramView: View {
     @Binding var type: AppType
     @Binding var path: String
     @Binding var showFileDialog: Bool

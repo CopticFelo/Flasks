@@ -32,7 +32,8 @@ struct InstallAppWizard: View {
                 ).tabItem {
                     Text("Flask")
                 }.tag(InstallAppWizardStep.flask)
-                AppInstallView(type: $type, path: $path, showFileDialog: $showFileDialog).tabItem {
+                SelectProgramView(type: $type, path: $path, showFileDialog: $showFileDialog).tabItem
+                {
                     Text("App")
                 }.tag(InstallAppWizardStep.app)
                 VStack {
