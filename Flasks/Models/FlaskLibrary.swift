@@ -56,9 +56,10 @@ class FlaskLibrary {
                 "WINEPREFIX": prefixDir.path
             ])
             let result = try await run(
-                .path(FilePath(runner.binPath.appending(path: "/wineboot").path)),
+                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
+                arguments: ["wineboot", "-u"],
                 environment: env,
-                output: .discarded
+                output: .string(limit: 4096)
             )
             switch result.terminationStatus {
             case .exited(let code):
