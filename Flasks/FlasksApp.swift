@@ -23,7 +23,10 @@ struct FlasksApp: App {
                     Text($0.name)
                 }.navigationTitle("Flasks")
             } detail: {
-                ContentView(selectedFlask: $selectedFlask)
+                if let flask = flaskLibrary.flaskList.first(where: { $0.id == selectedFlask }) {
+                    ProgramsGridView(
+                        selectedFlask: flask
+                    )
                     .toolbar {
                         ToolbarItem(placement: .primaryAction) {
                             Button(action: {
@@ -33,6 +36,7 @@ struct FlasksApp: App {
                             }
                         }
                     }
+                }
             }.sheet(
                 isPresented: $runnerDownloadSheet,
                 content: {
