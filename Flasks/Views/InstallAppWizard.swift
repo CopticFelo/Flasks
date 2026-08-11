@@ -48,10 +48,6 @@ struct InstallAppWizard: View {
                     Text("Options")
                 }.tag(InstallAppWizardStep.options)
             }
-            // Divider()
-            // HStack {
-            //     Spacer()
-            // }
         }.padding()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

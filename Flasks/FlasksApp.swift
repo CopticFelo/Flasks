@@ -41,9 +41,6 @@ struct FlasksApp: App {
                     ).environment(flaskLibrary)
                 }
             )
-            // .task {
-            //     try? flaskLibrary.scan()
-            // }
             // .setupNvimPreview {
             //     ContentView(selectedFlask: $selectedFlask)
             // }
