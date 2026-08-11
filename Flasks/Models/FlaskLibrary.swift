@@ -69,9 +69,7 @@ class FlaskLibrary {
                 throw FlaskError.wineError(detail: "Process terminated with signal \(code)")
             }
             let flask = Flask(registeredApps: [], runner: runner, path: prefixDir, name: name)
-            let jsonData = try JSONEncoder().encode(flask)
-            // TODO: Maybe add a warning to the top to not delete this file
-            try jsonData.write(to: prefixDir.appending(path: "/flask.json"), options: .atomic)
+            try flask.saveJson()
             return flask
         } catch let error as CocoaError {
             throw FlaskError.fileError(detail: error)

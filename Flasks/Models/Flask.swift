@@ -9,8 +9,16 @@ struct Flask: Codable, Identifiable {
     let path: URL
     let name: String
 
-    mutating func registerApp(_ path: URL) {
+    func saveJson() throws {
+        let jsonData = try JSONEncoder().encode(self)
+        // TODO: Maybe add a warning to the top to not delete this file
+        let jsonPath = self.path.appending(path: "/flask.json")
+        try jsonData.write(to: jsonPath, options: .atomic)
+    }
+
+    mutating func registerApp(_ path: URL) throws {
         registeredApps.append(path)
+        try saveJson()
     }
 
     func runApp(_ exePath: URL) async throws {

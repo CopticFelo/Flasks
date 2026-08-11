@@ -70,9 +70,13 @@ struct InstallAppWizard: View {
                                     guard let selectedRunner else { return }
                                     do {
                                         isCreating = true
-                                        let flask = try await flaskLibrary.createFlask(
+                                        var flask = try await flaskLibrary.createFlask(
                                             selectedRunner, name: name,
                                             windowsString: selectedWinVer)
+                                        let programURL = URL(string: path)
+                                        if let programURL = programURL {
+                                            try flask.registerApp(programURL)
+                                        }
                                         flaskLibrary.flaskList.append(flask)
                                         isPresented = false
                                     } catch let flaskError as FlaskError {
