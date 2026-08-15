@@ -90,6 +90,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		852A46493C1BC3774845F65B /* InstallAppWizard */ = {
+			isa = PBXGroup;
+			children = (
+				8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */,
+				25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */,
+				0E2130D6E94D695E39947CEB /* CreateFlaskView.swift */,
+			);
+			name = InstallAppWizard;
+			path = InstallAppWizard;
+			sourceTree = "<group>";
+		};
 		AE145555300A499D0049DACC = {
 			isa = PBXGroup;
 			children = (
@@ -112,9 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */,
-				0E2130D6E94D695E39947CEB /* CreateFlaskView.swift */,
-				8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */,
-				25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */,
+				852A46493C1BC3774845F65B /* InstallAppWizard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
