@@ -1,10 +1,4 @@
-//
-//  ContentView.swift
-//  Flasks
-//
-//  Created by Philo on 17/07/2026.
-//
-
+import Foundation
 import SwiftUI
 
 struct ProgramsGridView: View {
@@ -31,10 +25,21 @@ struct ProgramIconView: View {
 
     @Binding var selectedProgram: URL?
 
+    @State var isRunning = false
+
     var body: some View {
         VStack(alignment: .center) {
-            Image(systemName: "questionmark.app").resizable()
-                .scaledToFit()
+            if isRunning {
+                PhaseAnimator([true, false]) { phase in
+                    Image(systemName: "questionmark.app").resizable()
+                        .scaledToFit().offset(y: phase ? -8 : 0)
+                } animation: { _ in
+                    return Animation.interpolatingSpring(stiffness: 170, damping: 12)
+                }
+            } else {
+                Image(systemName: "questionmark.app").resizable()
+                    .scaledToFit()
+            }
             Text("\(programPath.lastPathComponent.prefix(20))").lineLimit(1)
         }.padding()
             .background(
@@ -46,8 +51,12 @@ struct ProgramIconView: View {
             .contentShape(Rectangle())
             .gesture(
                 TapGesture(count: 2).onEnded {
+                    isRunning = true
                     Task.detached {
                         try await flask.runApp(programPath)
+                        DispatchQueue.main.async {
+                            isRunning = false
+                        }
                     }
                 }
             )
