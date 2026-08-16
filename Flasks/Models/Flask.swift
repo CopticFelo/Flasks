@@ -4,7 +4,7 @@ import System
 
 struct Flask: Codable, Identifiable {
     var id = UUID()
-    var registeredApps: [URL]
+    var registeredApps: [WineApp]
     let runner: Runner
     let path: URL
     let name: String
@@ -17,7 +17,8 @@ struct Flask: Codable, Identifiable {
     }
 
     mutating func registerApp(_ path: URL) throws {
-        registeredApps.append(path)
+        let app = WineApp(appPath: path)
+        registeredApps.append(app)
         try saveJson()
     }
 

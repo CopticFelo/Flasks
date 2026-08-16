@@ -24,7 +24,7 @@ struct FlasksApp: App {
                 }.navigationTitle("Flasks")
             } detail: {
                 if let flask = flaskLibrary.flaskList.first(where: { $0.id == selectedFlask }) {
-                    ProgramsGridView(
+                    AppGridView(
                         selectedFlask: flask
                     )
                     .toolbar {
@@ -36,6 +36,17 @@ struct FlasksApp: App {
                             }
                         }
                     }
+                } else {
+                    VStack {}
+                        .toolbar {
+                            ToolbarItem(placement: .primaryAction) {
+                                Button(action: {
+                                    runnerDownloadSheet = true
+                                }) {
+                                    Label("Add Item", systemImage: "plus")
+                                }
+                            }
+                        }
                 }
             }.sheet(
                 isPresented: $runnerDownloadSheet,

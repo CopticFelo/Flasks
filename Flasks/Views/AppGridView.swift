@@ -1,29 +1,29 @@
 import Foundation
 import SwiftUI
 
-struct ProgramsGridView: View {
+struct AppGridView: View {
     let selectedFlask: Flask
     let columns = [GridItem(.adaptive(minimum: 100.0, maximum: 100.0), spacing: 20.0)]
 
-    @State var selectedProgram: URL?
+    @State var selectedProgram: WineApp.ID?
     var body: some View {
         LazyVGrid(
             columns: columns, alignment: .leading
         ) {
-            ForEach(selectedFlask.registeredApps) { path in
-                ProgramIconView(
-                    flask: selectedFlask, programPath: path, selectedProgram: $selectedProgram
+            ForEach(selectedFlask.registeredApps) { wineApp in
+                AppIconView(
+                    flask: selectedFlask, wineApp: wineApp, selectedAppID: $selectedProgram
                 )
             }
         }.frame(maxHeight: .infinity, alignment: .top).padding()
     }
 }
 
-struct ProgramIconView: View {
+struct AppIconView: View {
     let flask: Flask
-    let programPath: URL
+    let wineApp: WineApp
 
-    @Binding var selectedProgram: URL?
+    @Binding var selectedAppID: WineApp.ID?
 
     @State var isRunning = false
 
@@ -40,11 +40,11 @@ struct ProgramIconView: View {
                 Image(systemName: "questionmark.app").resizable()
                     .scaledToFit()
             }
-            Text("\(programPath.lastPathComponent.prefix(20))").lineLimit(1)
+            Text("\(wineApp.appPath.lastPathComponent.prefix(20))").lineLimit(1)
         }.padding()
             .background(
                 RoundedRectangle(cornerRadius: 6).fill(
-                    selectedProgram == programPath ? Color.accentColor : Color.clear
+                    selectedAppID == wineApp.id ? Color.accentColor : Color.clear
                 )
             )
             .frame(width: 100, height: 100)
@@ -53,7 +53,7 @@ struct ProgramIconView: View {
                 TapGesture(count: 2).onEnded {
                     isRunning = true
                     Task.detached {
-                        try await flask.runApp(programPath)
+                        try await flask.runApp(wineApp.appPath)
                         DispatchQueue.main.async {
                             isRunning = false
                         }
@@ -62,7 +62,7 @@ struct ProgramIconView: View {
             )
             .simultaneousGesture(
                 TapGesture().onEnded {
-                    selectedProgram = programPath
+                    selectedAppID = wineApp.id
                 }
             )
             .padding()
