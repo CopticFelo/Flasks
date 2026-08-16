@@ -1,4 +1,5 @@
 .nvim/
+buildServer.json
 # Created by https://www.toptal.com/developers/gitignore/api/swift,macos,xcode
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift,macos,xcode
 
