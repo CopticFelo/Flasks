@@ -2,12 +2,19 @@ import Foundation
 import Subprocess
 import System
 
-struct Flask: Codable, Identifiable {
+class Flask: Codable, Identifiable {
     var id = UUID()
     var registeredApps: [WineApp]
     let runner: Runner
     let path: URL
     let name: String
+
+    init(registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
+        self.registeredApps = registeredApps
+        self.runner = runner
+        self.path = path
+        self.name = name
+    }
 
     func saveJson() throws {
         let jsonData = try JSONEncoder().encode(self)
@@ -16,7 +23,7 @@ struct Flask: Codable, Identifiable {
         try jsonData.write(to: jsonPath, options: .atomic)
     }
 
-    mutating func registerApp(_ path: URL) throws {
+    func registerApp(_ path: URL) throws {
         let app = WineApp(appPath: path)
         registeredApps.append(app)
         try saveJson()
