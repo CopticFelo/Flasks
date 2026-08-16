@@ -1,7 +1,7 @@
 import Foundation
 import Subprocess
 
-enum FlaskError {
+enum FlaskError: Identifiable {
     case fileError(detail: CocoaError)
     case processError(detail: SubprocessError)
     case wineError(detail: String)
@@ -9,6 +9,25 @@ enum FlaskError {
     case serverError(code: Int)
     case invalidResponseError
     case unknownError
+
+    var id: String {
+        switch self {
+        case .fileError(let detail):
+            return "fileError_\(detail.errorCode)"
+        case .processError(let detail):
+            return "processError_\(detail)"
+        case .wineError(let detail):
+            return "wineError_\(detail)"
+        case .networkError(let detail):
+            return "networkError_\(detail.errorCode)"
+        case .serverError(let code):
+            return "serverError_\(code)"
+        case .invalidResponseError:
+            return "invalidResponseError"
+        case .unknownError:
+            return "unknownError"
+        }
+    }
 }
 
 extension FlaskError: LocalizedError {
