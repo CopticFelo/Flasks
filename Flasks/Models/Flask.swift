@@ -24,6 +24,8 @@ class Flask: Codable, Identifiable {
         try jsonData.write(to: jsonPath, options: .atomic)
     }
 
+    /// Path validation must be done by the caller
+    /// this only throws Json saving errors
     func registerApp(_ path: URL) throws {
         let app = WineApp(appPath: path)
         registeredApps.append(app)

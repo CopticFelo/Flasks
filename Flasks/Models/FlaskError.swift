@@ -2,6 +2,7 @@ import Foundation
 import Subprocess
 
 enum FlaskError: Identifiable {
+    case formError(description: String)
     case fileError(detail: CocoaError)
     case processError(detail: SubprocessError)
     case wineError(detail: String)
@@ -12,6 +13,8 @@ enum FlaskError: Identifiable {
 
     var id: String {
         switch self {
+        case .formError:
+            return "formError"
         case .fileError(let detail):
             return "fileError_\(detail.errorCode)"
         case .processError(let detail):
@@ -33,6 +36,7 @@ enum FlaskError: Identifiable {
 extension FlaskError: LocalizedError {
     var errorDescription: String? {
         switch self {
+        case .formError(let desc): return desc
         case .fileError(let detail): return "File Error: \(detail.localizedDescription)"
         case .processError(let detail): return "Process Error: \(detail.localizedDescription)"
         case .wineError(let detail): return "Wine Error: \(detail)"

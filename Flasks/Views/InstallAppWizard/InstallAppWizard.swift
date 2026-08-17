@@ -64,24 +64,41 @@ struct InstallAppWizard: View {
                     if step == .options {
                         Button(
                             action: {
-                                // TODO: Handle empty fields
                                 Task {
-                                    error = nil
-                                    guard let selectedRunner else { return }
+                                    DispatchQueue.main.async {
+                                        error = nil
+                                    }
                                     do {
-                                        isCreating = true
-                                        var flask = try await flaskLibrary.createFlask(
+                                        guard let selectedRunner else {
+                                            throw FlaskError.formError(
+                                                description: "Select a runner")
+                                        }
+                                        guard !name.isEmpty else {
+                                            throw FlaskError.formError(description: "Enter a name")
+                                        }
+                                        guard FileManager.default.fileExists(atPath: path) else {
+                                            throw FlaskError.fileError(
+                                                detail: CocoaError(.fileNoSuchFile))
+                                        }
+                                        DispatchQueue.main.async {
+                                            isCreating = true
+                                        }
+                                        let flask = try await flaskLibrary.createFlask(
                                             selectedRunner, name: name,
                                             windowsString: selectedWinVer)
-                                        let programURL = URL(string: path)
-                                        if let programURL = programURL {
-                                            try flask.registerApp(programURL)
-                                        }
+                                        // intentional return btw
+                                        // we would probably need a more complex system
+                                        guard !path.isEmpty else { return }
+                                        let programURL = URL(
+                                            filePath: path, directoryHint: .notDirectory)
+                                        try flask.registerApp(programURL)
                                         flaskLibrary.flaskList.append(flask)
                                         isPresented = false
                                     } catch let flaskError as FlaskError {
-                                        isCreating = false
-                                        self.error = flaskError
+                                        DispatchQueue.main.async {
+                                            isCreating = false
+                                            self.error = flaskError
+                                        }
                                     }
                                 }
                             },
@@ -108,6 +125,7 @@ struct InstallAppWizard: View {
                 }
             }
     }
+
     func next() {
         switch step {
         case .flask: step = .app
