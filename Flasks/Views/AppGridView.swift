@@ -2,28 +2,42 @@ import Foundation
 import SwiftUI
 
 struct AppGridView: View {
-    let selectedFlask: Flask
+    var selectedFlask: Flask
     let columns = [GridItem(.adaptive(minimum: 100.0, maximum: 100.0), spacing: 20.0)]
 
     @State var selectedProgram: WineApp.ID?
+    @State var error: FlaskError?
     var body: some View {
         LazyVGrid(
             columns: columns, alignment: .leading
         ) {
             ForEach(selectedFlask.registeredApps) { wineApp in
                 AppIconView(
-                    flask: selectedFlask, wineApp: wineApp, selectedAppID: $selectedProgram
+                    wineApp: wineApp,
+                    flask: selectedFlask, selectedAppID: $selectedProgram,
+                    error: $error
                 )
             }
         }.frame(maxHeight: .infinity, alignment: .top).padding()
+            .alert(item: $error) { err in
+                Alert(
+                    title: Text(err.localizedDescription),
+                    message: Text(
+                        err.recoverySuggestion
+                            ?? "Please open an issue on https://github.com/CopticFelo/Flasks/issues"
+                    ),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
     }
 }
 
 struct AppIconView: View {
-    let flask: Flask
     let wineApp: WineApp
+    var flask: Flask
 
     @Binding var selectedAppID: WineApp.ID?
+    @Binding var error: FlaskError?
 
     @State var isRunning = false
 
@@ -66,6 +80,24 @@ struct AppIconView: View {
                 }
             )
             .padding()
+            .contextMenu {
+                Button {
+                    NSWorkspace.shared.activateFileViewerSelecting([wineApp.appPath])
+                } label: {
+                    Label("Show in finder", systemImage: "folder")
+                }
+                Button(role: .destructive) {
+                    do {
+                        try flask.removeApp(wineApp.id)
+                    } catch let err as FlaskError {
+                        error = err
+                    } catch {
+                        // TODO: Use typed throws to avoid this rubbish
+                    }
+                } label: {
+                    Label("Remove app from Flask", systemImage: "trash")
+                }
+            }
     }
 }
 

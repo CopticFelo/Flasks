@@ -2,6 +2,7 @@ import Foundation
 import Subprocess
 import System
 
+@Observable
 class Flask: Codable, Identifiable {
     var id = UUID()
     var registeredApps: [WineApp]
@@ -26,6 +27,11 @@ class Flask: Codable, Identifiable {
     func registerApp(_ path: URL) throws {
         let app = WineApp(appPath: path)
         registeredApps.append(app)
+        try saveJson()
+    }
+
+    func removeApp(_ id: WineApp.ID) throws {
+        registeredApps.removeAll { $0.id == id }
         try saveJson()
     }
 
