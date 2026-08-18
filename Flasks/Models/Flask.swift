@@ -4,7 +4,7 @@ import System
 
 @Observable
 class Flask: Codable, Identifiable {
-    var id = UUID()
+    let id = UUID()
     var registeredApps: [WineApp]
     let runner: Runner
     let path: URL
@@ -16,6 +16,31 @@ class Flask: Codable, Identifiable {
         self.path = path
         self.name = name
     }
+
+    // Json coding boilerplate
+    enum CodingKeys: String, CodingKey {
+        case registeredApps = "registered_apps"
+        case runner = "runner"
+        case path = "path"
+        case name = "name"
+    }
+
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        registeredApps = try container.decode([WineApp].self, forKey: .registeredApps)
+        runner = try container.decode(Runner.self, forKey: .runner)
+        path = try container.decode(URL.self, forKey: .path)
+        name = try container.decode(String.self, forKey: .name)
+    }
+
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(registeredApps, forKey: .registeredApps)
+        try container.encode(runner, forKey: .runner)
+        try container.encode(path, forKey: .path)
+        try container.encode(name, forKey: .name)
+    }
+    // end of boilerplate section
 
     func saveJson() throws {
         let jsonData = try JSONEncoder().encode(self)
