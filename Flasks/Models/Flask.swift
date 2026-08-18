@@ -2,6 +2,19 @@ import Foundation
 import Subprocess
 import System
 
+struct ConsoleLog: Identifiable, Equatable {
+    let id = UUID()
+    let timestamp: Date = Date()
+    let appName: String
+    let runnerName: String?
+    let message: String
+
+    func fullMessage() -> String {
+        return
+            "[\(appName.prefix(20))@\(timestamp.formatted(date: .omitted, time: .shortened))]: \(message)"
+    }
+}
+
 @Observable
 class Flask: Codable, Identifiable {
     let id = UUID()
@@ -9,6 +22,8 @@ class Flask: Codable, Identifiable {
     let runner: Runner
     let path: URL
     let name: String
+
+    var consoleOutput: [ConsoleLog] = []
 
     init(registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
         self.registeredApps = registeredApps
@@ -67,12 +82,23 @@ class Flask: Codable, Identifiable {
             "WINEPREFIX": path.path
         ])
         do {
+            let appName = exePath.lastPathComponent
             let result = try await run(
                 .path(FilePath(runner.binPath.appending(path: "/wine").path)),
                 arguments: [exePath.path],
                 environment: env,
-                output: .discarded
-            )
+                input: .none,
+                output: .sequence,
+                error: .combinedWithOutput
+            ) { exec in
+                for try await line in exec.standardOutput.strings() {
+                    DispatchQueue.main.async {
+                        self.consoleOutput.append(
+                            ConsoleLog(
+                                appName: appName, runnerName: self.runner.name, message: line))
+                    }
+                }
+            }
             switch result.terminationStatus {
             case .exited(let code):
                 if code != 0 {

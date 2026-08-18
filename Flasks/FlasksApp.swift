@@ -15,6 +15,7 @@ struct FlasksApp: App {
 
     @State private var selectedFlask: Flask.ID?
     @State var runnerDownloadSheet = false
+    @State var showConsole = false
 
     var body: some Scene {
         Window("Flasks", id: "0") {
@@ -25,9 +26,18 @@ struct FlasksApp: App {
             } detail: {
                 if let flask = flaskLibrary.flaskList.first(where: { $0.id == selectedFlask }) {
                     AppGridView(
-                        selectedFlask: flask
+                        selectedFlask: flask,
+                        showConsole: $showConsole
                     )
                     .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button(action: {
+                                showConsole.toggle()
+                            }) {
+                                Label("Show Console", systemImage: "apple.terminal")
+                            }
+                        }
+                        ToolbarSpacer()
                         ToolbarItem(placement: .primaryAction) {
                             Button(action: {
                                 runnerDownloadSheet = true

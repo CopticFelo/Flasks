@@ -7,28 +7,38 @@ struct AppGridView: View {
 
     @State var selectedProgram: WineApp.ID?
     @State var error: FlaskError?
+
+    @Binding var showConsole: Bool
     var body: some View {
-        LazyVGrid(
-            columns: columns, alignment: .leading
-        ) {
-            ForEach(selectedFlask.registeredApps) { wineApp in
-                AppIconView(
-                    wineApp: wineApp,
-                    flask: selectedFlask, selectedAppID: $selectedProgram,
-                    error: $error
-                )
+        VSplitView {
+            ScrollView {
+                LazyVGrid(
+                    columns: columns, alignment: .leading
+                ) {
+                    ForEach(selectedFlask.registeredApps) { wineApp in
+                        AppIconView(
+                            wineApp: wineApp,
+                            flask: selectedFlask, selectedAppID: $selectedProgram,
+                            error: $error
+                        )
+                    }
+                }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding()
+                    .alert(item: $error) { err in
+                        Alert(
+                            title: Text(err.localizedDescription),
+                            message: Text(
+                                err.recoverySuggestion
+                                    ?? "Please open an issue on https://github.com/CopticFelo/Flasks/issues"
+                            ),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+            }.frame(minHeight: 300.0)
+            if showConsole {
+                ConsoleView(flask: selectedFlask)
             }
-        }.frame(maxHeight: .infinity, alignment: .top).padding()
-            .alert(item: $error) { err in
-                Alert(
-                    title: Text(err.localizedDescription),
-                    message: Text(
-                        err.recoverySuggestion
-                            ?? "Please open an issue on https://github.com/CopticFelo/Flasks/issues"
-                    ),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
+        }
     }
 }
 

@@ -22,6 +22,7 @@
 		CCC1F7902E190403BB38D836 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B68DCAD7D3C21C452AE39233 /* .gitignore */; };
 		CD7A51976D857C99495B56EA /* WineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67917F7F78D6D46779E37961 /* WineApp.swift */; };
 		D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */; };
+		D9A454540FC05E3FF410895B /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = InstallAppWizard.swift; sourceTree = "<group>"; };
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68DCAD7D3C21C452AE39233 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = ConsoleView.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
 		D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineDownloader.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				FC8F17412AD2EDE987CFEC8E /* WineInstallView.swift */,
 				852A46493C1BC3774845F65B /* InstallAppWizard */,
+				BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */,
 				8AD893B67578E6B55D7F9C65 /* URL.swift in Sources */,
 				CD7A51976D857C99495B56EA /* WineApp.swift in Sources */,
+				D9A454540FC05E3FF410895B /* ConsoleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
