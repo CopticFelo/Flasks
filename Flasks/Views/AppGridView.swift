@@ -77,9 +77,17 @@ struct AppIconView: View {
                 TapGesture(count: 2).onEnded {
                     isRunning = true
                     Task.detached {
-                        try await flask.runApp(wineApp.appPath)
-                        DispatchQueue.main.async {
-                            isRunning = false
+                        defer {
+                            DispatchQueue.main.async {
+                                isRunning = false
+                            }
+                        }
+                        do {
+                            try await flask.runApp(wineApp.appPath)
+                        } catch let err as FlaskError {
+                            DispatchQueue.main.async {
+                                error = err
+                            }
                         }
                     }
                 }
