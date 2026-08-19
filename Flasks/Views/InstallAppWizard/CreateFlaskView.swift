@@ -9,22 +9,33 @@ let winVersions = [
 ]
 
 struct CreateFlaskView: View {
+    @Environment(FlaskLibrary.self) private var flaskLibrary
     @Binding var runnerLibrary: WineLibrary
 
+    @Binding var selectedFlask: Flask.ID?
     @Binding var selectedRunner: Runner?
     @Binding var selectedWinVer: String
     @Binding var name: String
     var body: some View {
         Form {
-            TextField("Flask name", text: $name)
-            Picker("Runner", selection: $selectedRunner) {
-                ForEach(runnerLibrary.runners) { runner in
-                    Text(runner.name ?? "Unknown").tag(runner)
+            Picker("Choose flask", selection: $selectedFlask) {
+                ForEach(flaskLibrary.flaskList) { flask in
+                    Text(flask.name).tag(flask.id)
                 }
+                Divider()
+                Label("New", systemImage: "plus").tag(nil as Flask.ID?)
             }
-            Picker("Windows version", selection: $selectedWinVer) {
-                ForEach(winVersions.keys.sorted(), id: \.self) { key in
-                    Text(winVersions[key]!).tag(key)
+            if selectedFlask == nil {
+                TextField("Flask name", text: $name)
+                Picker("Runner", selection: $selectedRunner) {
+                    ForEach(runnerLibrary.runners) { runner in
+                        Text(runner.name ?? "Unknown").tag(runner)
+                    }
+                }
+                Picker("Windows version", selection: $selectedWinVer) {
+                    ForEach(winVersions.keys.sorted(), id: \.self) { key in
+                        Text(winVersions[key]!).tag(key)
+                    }
                 }
             }
         }.formStyle(.grouped).scrollContentBackground(.hidden)

@@ -13,6 +13,8 @@ struct InstallAppWizard: View {
     @Binding var isPresented: Bool
     @State private var step: InstallAppWizardStep = .flask
 
+    @State private var selectedFlask: Flask.ID?
+
     @State var selectedRunner: Runner?
     @State var selectedWinVer: String = "win10"
     @State var name = ""
@@ -26,10 +28,14 @@ struct InstallAppWizard: View {
     var body: some View {
         VStack {
             TabView(selection: $step) {
-                CreateFlaskView(
-                    runnerLibrary: $runnerLibrary,
-                    selectedRunner: $selectedRunner, selectedWinVer: $selectedWinVer, name: $name
-                ).tabItem {
+                VStack {
+                    CreateFlaskView(
+                        runnerLibrary: $runnerLibrary,
+                        selectedFlask: $selectedFlask,
+                        selectedRunner: $selectedRunner, selectedWinVer: $selectedWinVer,
+                        name: $name
+                    )
+                }.tabItem {
                     Text("Flask")
                 }.tag(InstallAppWizardStep.flask)
                 SelectProgramView(type: $type, path: $path, showFileDialog: $showFileDialog).tabItem
@@ -69,31 +75,51 @@ struct InstallAppWizard: View {
                                         error = nil
                                     }
                                     do {
-                                        guard let selectedRunner else {
-                                            throw FlaskError.formError(
-                                                description: "Select a runner")
+                                        if selectedFlask == nil {
+                                            guard let selectedRunner else {
+                                                throw FlaskError.formError(
+                                                    description: "Select a runner")
+                                            }
+                                            guard !name.isEmpty else {
+                                                throw FlaskError.formError(
+                                                    description: "Enter a name")
+                                            }
+                                            guard FileManager.default.fileExists(atPath: path)
+                                            else {
+                                                throw FlaskError.fileError(
+                                                    detail: CocoaError(.fileNoSuchFile))
+                                            }
+                                            DispatchQueue.main.async {
+                                                isCreating = true
+                                            }
+                                            let flask = try await flaskLibrary.createFlask(
+                                                selectedRunner, name: name,
+                                                windowsString: selectedWinVer)
+                                            // intentional return btw
+                                            // we would probably need a more complex system
+                                            guard !path.isEmpty else {
+                                                flaskLibrary.flaskList.append(flask)
+                                                isPresented = false
+                                                return
+                                            }
+                                            let programURL = URL(
+                                                filePath: path, directoryHint: .notDirectory)
+                                            try flask.registerApp(programURL)
+                                            flaskLibrary.flaskList.append(flask)
+                                            isPresented = false
+                                        } else {
+                                            let flask = flaskLibrary.flaskList.first(where: {
+                                                $0.id == selectedFlask
+                                            })
+                                            guard !path.isEmpty else {
+                                                isPresented = false
+                                                return
+                                            }
+                                            let programURL = URL(
+                                                filePath: path, directoryHint: .notDirectory)
+                                            try flask?.registerApp(programURL)
+                                            isPresented = false
                                         }
-                                        guard !name.isEmpty else {
-                                            throw FlaskError.formError(description: "Enter a name")
-                                        }
-                                        guard FileManager.default.fileExists(atPath: path) else {
-                                            throw FlaskError.fileError(
-                                                detail: CocoaError(.fileNoSuchFile))
-                                        }
-                                        DispatchQueue.main.async {
-                                            isCreating = true
-                                        }
-                                        let flask = try await flaskLibrary.createFlask(
-                                            selectedRunner, name: name,
-                                            windowsString: selectedWinVer)
-                                        // intentional return btw
-                                        // we would probably need a more complex system
-                                        guard !path.isEmpty else { return }
-                                        let programURL = URL(
-                                            filePath: path, directoryHint: .notDirectory)
-                                        try flask.registerApp(programURL)
-                                        flaskLibrary.flaskList.append(flask)
-                                        isPresented = false
                                     } catch let flaskError as FlaskError {
                                         DispatchQueue.main.async {
                                             isCreating = false
