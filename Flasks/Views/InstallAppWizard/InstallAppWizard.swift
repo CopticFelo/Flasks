@@ -140,7 +140,7 @@ struct InstallAppWizard: View {
                             label: {
                                 Text("Next")
                             }
-                        ).disabled(isCreating || name.isEmpty)
+                        ).disabled(isCreating || (name.isEmpty && selectedFlask == nil))
                     }
                 }
             }
