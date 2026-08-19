@@ -7,6 +7,15 @@ struct ConsoleView: View {
             HStack(alignment: .center) {
                 Text("Console").font(.headline)
                 Spacer()
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(
+                        flask.consoleOutput.map { $0.fullMessage() }.joined(separator: "\n"),
+                        forType: .string)
+                } label: {
+                    Image(systemName: "document.on.document")
+                }.buttonStyle(.bordered).buttonBorderShape(.circle).controlSize(.large)
                 Button(role: .destructive) {
                     flask.consoleOutput.removeAll()
                 } label: {
