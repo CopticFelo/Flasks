@@ -14,7 +14,7 @@
 		8AD893B67578E6B55D7F9C65 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9C7AAA8EBEBB6B53BFA08F /* URL.swift */; };
 		8CDFBA1DF6C9365734242EB6 /* SelectProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */; };
 		90D1AC62033EA95F7649389C /* InstallAppWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */; };
-		9ACBEC619F03749E7BF88E75 /* WineDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */; };
+		9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* Downloader.swift */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
 		AEC759893027825200C079E1 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = AEC759883027825200C079E1 /* Subprocess */; };
 		C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7997B499A640F8952A17B4B /* WineLibrary.swift */; };
@@ -40,7 +40,7 @@
 		BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = ConsoleView.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
-		D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineDownloader.swift; sourceTree = "<group>"; };
+		D1D76F916FC6C21A71FF41A5 /* Downloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = FlaskError.swift; path = FlaskError.swift; sourceTree = "<group>"; };
 		FC8F17412AD2EDE987CFEC8E /* DownloadView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,7 +78,7 @@
 		48CA7BE4A39D3EFC5D7D8308 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D1D76F916FC6C21A71FF41A5 /* WineDownloader.swift */,
+				D1D76F916FC6C21A71FF41A5 /* Downloader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -230,7 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ACBEC619F03749E7BF88E75 /* WineDownloader.swift in Sources */,
+				9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */,
 				C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */,
 				49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */,
 				03C4217D43E0E40D8E2DD41D /* DownloadView.swift in Sources */,

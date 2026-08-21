@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DownloadView: View {
+    @Environment(\.dismissWindow) private var dismissWindow
     struct Downloadable: Identifiable {
         let id = UUID()
         let name: String
@@ -20,28 +21,17 @@ struct DownloadView: View {
                 "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.12/wine-devel-11.12-osx64.tar.xz"
         ),
     ]
-    @Environment(\.dismissWindow) private var dismissWindow
 
-    @State var selectedRunner = "wine-devel-11.13"
-    var downloader = WineDownloader()
+    @State var alertError: FlaskError?
     var body: some View {
         VStack {
             Text("Choose Wine Runner to download")
             Table(runnerList) {
-                TableColumn("name", value: \.name)
+                TableColumn("Name", value: \.name)
                 TableColumn("Download") { downloadable in
-                    TableDownloadView(downloadURL: downloadable.url)
-                }
-            }
-            Spacer()
-            if downloader.state == .downloading || downloader.state == .extracting {
-                VStack {
-                    ProgressView(value: downloader.progress)
-                    if downloader.state == .downloading {
-                        Text(downloader.progress, format: .percent.precision(.fractionLength(1)))
-                    } else {
-                        Text("Extracting...")
-                    }
+                    TableDownloadView(
+                        name: downloadable.name, downloadURL: downloadable.url,
+                        alertError: $alertError)
                 }
             }
             Divider()
@@ -54,21 +44,10 @@ struct DownloadView: View {
                         Text("Cancel")
                     })
                 Spacer()
-                // Button(
-                //     action: {
-                //         guard
-                //             let downloadUrl = URL(
-                //                 string: runnerList[selectedRunner].url
-                //             )
-                //         else { return }
-                //         print("Started download")
-                //         downloader.startDownload(downloadUrl)
-                //     },
-                //     label: {
-                //         Text("Download Runner")
-                //     }
-                // ).disabled(downloader.state == .downloading || downloader.state == .extracting)
             }
-        }.padding()
+        }.padding().alert(item: $alertError) { err in
+            Alert(
+                title: Text(err.localizedDescription), message: Text(err.recoverySuggestion ?? ""))
+        }
     }
 }

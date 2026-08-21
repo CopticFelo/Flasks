@@ -11,7 +11,7 @@ enum DownloadState {
 }
 
 @Observable
-class WineDownloader: NSObject {
+class Downloader: NSObject {
     @ObservationIgnored
     private lazy var session = URLSession(
         configuration: .default, delegate: self, delegateQueue: nil)
@@ -39,6 +39,8 @@ class WineDownloader: NSObject {
         self.downloadTask = task
         state = .downloading
     }
+    // TODO: Find a better way of doing this
+    /// only specific to Gcenx's wine devel builds
     func untarAndInstall(_ path: URL) async {
         do {
             print("Extracting........")
@@ -98,7 +100,7 @@ class WineDownloader: NSObject {
     }
 }
 
-extension WineDownloader: URLSessionDownloadDelegate {
+extension Downloader: URLSessionDownloadDelegate {
     func urlSession(
         _ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?
     ) {
