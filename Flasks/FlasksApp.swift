@@ -17,6 +17,8 @@ struct FlasksApp: App {
     @State var runnerDownloadSheet = false
     @State var showConsole = false
 
+    @Environment(\.openWindow) private var openWindow
+
     var body: some Scene {
         Window("Flasks", id: "0") {
             NavigationSplitView {
@@ -30,6 +32,14 @@ struct FlasksApp: App {
                         showConsole: $showConsole
                     )
                     .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button(action: {
+                                openWindow(id: "downloader")
+                            }) {
+                                Label("Downloader", systemImage: "arrow.down.circle")
+                            }
+                        }
+                        ToolbarSpacer()
                         ToolbarItem(placement: .primaryAction) {
                             Button(action: {
                                 showConsole.toggle()
@@ -66,9 +76,9 @@ struct FlasksApp: App {
                     ).environment(flaskLibrary)
                 }
             )
-            // .setupNvimPreview {
-            //     ContentView(selectedFlask: $selectedFlask)
-            // }
+        }
+        WindowGroup(id: "downloader") {
+            DownloadView()
         }
     }
 }
