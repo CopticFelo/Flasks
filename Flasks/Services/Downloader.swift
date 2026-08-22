@@ -52,6 +52,11 @@ class Downloader: NSObject {
         self.downloadTask = task
         state = .downloading
     }
+
+    func cancelDownload() {
+        downloadTask?.cancel()
+        self.state = .idle
+    }
     // TODO: Find a better way of doing this
     /// only specific to Gcenx's wine devel builds
     func untarAndInstall(_ path: URL) async {

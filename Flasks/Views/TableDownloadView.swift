@@ -4,6 +4,11 @@ struct TableDownloadView: View {
     let downloadable: Downloadable
     let isDownloaded: Bool
 
+    private var isButtonDisabled: Bool {
+        guard let state = downloader?.state else { return isDownloaded }
+        return (state != .idle && state != .downloading) || isDownloaded
+    }
+
     @Binding var alertError: FlaskError?
 
     @State private var downloader: Downloader?
@@ -20,12 +25,18 @@ struct TableDownloadView: View {
                 }
             }
             Button {
-                if downloadable.url == nil {
-                    errorString = "Bad URL"
-                    return
+                switch downloader?.state ?? DownloadState.idle {
+                case .idle:
+                    if downloadable.url == nil {
+                        errorString = "Bad URL"
+                        return
+                    }
+                    downloader = Downloader(downloadable)
+                    downloader?.startDownload()
+                case .downloading:
+                    downloader?.cancelDownload()
+                default: return
                 }
-                downloader = Downloader(downloadable)
-                downloader?.startDownload()
             } label: {
                 if isDownloaded {
                     Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
@@ -37,7 +48,7 @@ struct TableDownloadView: View {
                     default: Image(systemName: "square.and.arrow.down")
                     }
                 }
-            }.disabled((downloader?.state != .idle && downloader != nil) || isDownloaded)
+            }.disabled(isButtonDisabled)
         }
     }
 }
