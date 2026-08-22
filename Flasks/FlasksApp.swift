@@ -77,7 +77,7 @@ struct FlasksApp: App {
                 }
             )
         }
-        WindowGroup(id: "downloader") {
+        UtilityWindow("Download Runners", id: "downloader") {
             DownloadView()
         }
     }
