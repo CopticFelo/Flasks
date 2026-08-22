@@ -3,6 +3,12 @@ import Subprocess
 import System
 import os
 
+struct Downloadable: Identifiable {
+    let id = UUID()
+    let name: String
+    let url: URL?
+}
+
 enum DownloadState {
     case extracting
     case downloading
@@ -19,9 +25,15 @@ class Downloader: NSObject {
     @ObservationIgnored
     var downloadTask: URLSessionDownloadTask?
 
+    var downloadable: Downloadable
+
     var state: DownloadState = .idle
     var error: FlaskError?
     var progress: Float = 0.0
+
+    init(_ downloadable: Downloadable) {
+        self.downloadable = downloadable
+    }
 
     private func getRunnersDir() throws -> URL {
         let appSupport = try FileManager.default.url(
@@ -33,7 +45,8 @@ class Downloader: NSObject {
         return dir
     }
 
-    func startDownload(_ url: URL) {
+    func startDownload() {
+        guard let url = self.downloadable.url else { return }
         let task = self.session.downloadTask(with: url)
         task.resume()
         self.downloadTask = task
@@ -62,7 +75,7 @@ class Downloader: NSObject {
 
             print("Moving.........")
             let dst = try getRunnersDir().appending(
-                path: path.deletingPathExtension().deletingPathExtension().lastPathComponent
+                path: downloadable.name
             )
 
             if FileManager.default.fileExists(

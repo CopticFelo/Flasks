@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct TableDownloadView: View {
-    let name: String
-    let downloadURL: String
+    let downloadable: Downloadable
+    let isDownloaded: Bool
 
     @Binding var alertError: FlaskError?
 
@@ -20,22 +20,24 @@ struct TableDownloadView: View {
                 }
             }
             Button {
-                let url = URL(string: downloadURL)
-                guard let url else {
+                if downloadable.url == nil {
                     errorString = "Bad URL"
                     return
                 }
-                downloader = Downloader()
-                downloader?.startDownload(url)
+                downloader = Downloader(downloadable)
+                downloader?.startDownload()
             } label: {
-                switch downloader?.state {
-                case .downloading: Image(systemName: "x.circle")
-                case .complete:
+                if isDownloaded {
                     Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                default: Image(systemName: "square.and.arrow.down")
+                } else {
+                    switch downloader?.state {
+                    case .downloading: Image(systemName: "x.circle")
+                    case .complete:
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                    default: Image(systemName: "square.and.arrow.down")
+                    }
                 }
-            }.disabled(
-                downloader?.state != .idle && downloader != nil)
+            }.disabled((downloader?.state != .idle && downloader != nil) || isDownloaded)
         }
     }
 }
