@@ -14,11 +14,11 @@ struct DownloadView: View {
                 )
         ),
         Downloadable(
-            name: "wine-devel-11.12",
+            name: "wine-devel-11.10",
             url:
                 URL(
                     string:
-                        "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.12/wine-devel-11.12-osx64.tar.xz"
+                        "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.10/wine-devel-11.10-osx64.tar.xz"
                 )
         ),
     ]
