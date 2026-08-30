@@ -1,6 +1,6 @@
 import Foundation
 
-enum DXTranslationLayer: Codable {
+enum DXTranslationLayer: Identifiable, Codable {
     case wined3d
     case dxvk(hud: Bool)
     case dxmt
@@ -13,6 +13,7 @@ enum DXTranslationLayer: Codable {
         }
     }
 
+    var id: String { prettyPrint() }
     func prettyPrint() -> String {
         switch self {
         case .wined3d: return "WineD3D"
