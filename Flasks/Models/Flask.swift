@@ -18,6 +18,7 @@ struct ConsoleLog: Identifiable, Equatable {
 @Observable
 class Flask: Codable, Identifiable {
     let id = UUID()
+    var settings: FlaskSettings
     var registeredApps: [WineApp]
     let runner: Runner
     let path: URL
@@ -26,6 +27,7 @@ class Flask: Codable, Identifiable {
     var consoleOutput: [ConsoleLog] = []
 
     init(registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
+        self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .wined3d, msync: false)
         self.registeredApps = registeredApps
         self.runner = runner
         self.path = path
@@ -34,6 +36,7 @@ class Flask: Codable, Identifiable {
 
     // Json coding boilerplate
     enum CodingKeys: String, CodingKey {
+        case settings = "settings"
         case registeredApps = "registered_apps"
         case runner = "runner"
         case path = "path"
@@ -42,6 +45,7 @@ class Flask: Codable, Identifiable {
 
     required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        settings = try container.decode(FlaskSettings.self, forKey: .settings)
         registeredApps = try container.decode([WineApp].self, forKey: .registeredApps)
         runner = try container.decode(Runner.self, forKey: .runner)
         path = try container.decode(URL.self, forKey: .path)
@@ -50,6 +54,7 @@ class Flask: Codable, Identifiable {
 
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(settings, forKey: .settings)
         try container.encode(registeredApps, forKey: .registeredApps)
         try container.encode(runner, forKey: .runner)
         try container.encode(path, forKey: .path)
@@ -78,8 +83,13 @@ class Flask: Codable, Identifiable {
     }
 
     func runApp(_ exePath: URL) async throws {
+        var dllOverides = ""
+        for dll in settings.dxTranslationLayer.dlls {
+            dllOverides += dll + "=n,"
+        }
         let env = Environment.custom([
-            "WINEPREFIX": path.path
+            "WINEPREFIX": path.path,
+            "WINEDLLOVERRIDES": dllOverides,
         ])
         do {
             let appName = exePath.lastPathComponent
