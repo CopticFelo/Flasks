@@ -1,25 +1,16 @@
 import Foundation
 
-enum DXTranslationLayer: Identifiable, Codable {
-    case wined3d
-    case dxvk(hud: Bool)
-    case dxmt
-    case d3dmetal
+enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
+    var id: String { rawValue }
+    case wined3d = "WineD3D"
+    case dxvk = "DXVK"
+    case dxmt = "DXMT"
+    case d3dmetal = "D3DMetal"
 
     var dlls: [String] {
         switch self {
         case .dxvk: return ["d3d11", "d3d10core"]
         default: return []
-        }
-    }
-
-    var id: String { prettyPrint() }
-    func prettyPrint() -> String {
-        switch self {
-        case .wined3d: return "WineD3D"
-        case .dxvk: return "DXVK"
-        case .dxmt: return "DXMT"
-        case .d3dmetal: return "D3DMetal"
         }
     }
 }
