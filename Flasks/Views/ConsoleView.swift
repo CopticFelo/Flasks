@@ -29,7 +29,7 @@ struct ConsoleView: View {
                         ForEach(flask.consoleOutput) { line in
                             Text(
                                 line.fullMessage()
-                            ).font(
+                            ).textSelection(.enabled).font(
                                 .system(.body, design: .monospaced)
                             ).id(line.id)
                         }
