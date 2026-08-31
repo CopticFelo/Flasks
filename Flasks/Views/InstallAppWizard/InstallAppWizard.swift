@@ -23,6 +23,8 @@ struct InstallAppWizard: View {
     @State var path = ""
     @State var showFileDialog = false
 
+    @State var selectedBackend: DXTranslationLayer? = .wined3d
+
     @State var error: FlaskError?
     @State var isCreating = false
     var body: some View {
@@ -43,6 +45,7 @@ struct InstallAppWizard: View {
                     Text("App")
                 }.tag(InstallAppWizardStep.app)
                 VStack {
+                    OptionView(selectedBackend: $selectedBackend)
                     Spacer()
                     if let error = error {
                         Text("\(error.localizedDescription)").foregroundStyle(.red).fontWeight(
@@ -105,6 +108,10 @@ struct InstallAppWizard: View {
                                             let programURL = URL(
                                                 filePath: path, directoryHint: .notDirectory)
                                             try flask.registerApp(programURL)
+                                            // Set DXTranslationLayer
+                                            try flask.settings.setDXTranslationLayer(
+                                                to: selectedBackend ?? .wined3d)
+                                            try flask.saveJson()
                                             flaskLibrary.flaskList.append(flask)
                                             isPresented = false
                                         } else {
@@ -118,6 +125,10 @@ struct InstallAppWizard: View {
                                             let programURL = URL(
                                                 filePath: path, directoryHint: .notDirectory)
                                             try flask?.registerApp(programURL)
+                                            // Set DXTranslationLayer
+                                            try flask?.settings.setDXTranslationLayer(
+                                                to: selectedBackend ?? .wined3d)
+                                            try flask?.saveJson()
                                             isPresented = false
                                         }
                                     } catch let flaskError as FlaskError {

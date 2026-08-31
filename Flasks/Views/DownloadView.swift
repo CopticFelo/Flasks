@@ -6,11 +6,11 @@ struct DownloadView: View {
     // TODO: Find a better way instead of hardcoding ts
     let runnerList: [Downloadable] = [
         Downloadable(
-            name: "wine-devel-11.13",
+            name: "wine-devel-11.16",
             url:
                 URL(
                     string:
-                        "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.13/wine-devel-11.13-osx64.tar.xz"
+                        "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.16/wine-devel-11.16-osx64.tar.xz"
                 )
         ),
         Downloadable(

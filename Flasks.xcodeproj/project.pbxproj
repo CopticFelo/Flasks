@@ -16,17 +16,17 @@
 		90D1AC62033EA95F7649389C /* InstallAppWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* InstallAppWizard.swift */; };
 		9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* Downloader.swift */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
-		AEA10F1930438E8700E66AB1 /* dxvk in Copy Wine Libraries */ = {isa = PBXBuildFile; fileRef = AEA10F1830438E8700E66AB1 /* dxvk */; };
 		AEA10F1B30438EFE00E66AB1 /* dxmt in Copy Wine Libraries */ = {isa = PBXBuildFile; fileRef = AEA10F1A30438EFE00E66AB1 /* dxmt */; };
 		AEC759893027825200C079E1 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = AEC759883027825200C079E1 /* Subprocess */; };
+		AEFAE1573044F549008FCA22 /* dxvk in Copy Wine Libraries */ = {isa = PBXBuildFile; fileRef = AEFAE1563044F549008FCA22 /* dxvk */; };
 		C4C47AD1B7B21B9F282ABF7C /* WineLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7997B499A640F8952A17B4B /* WineLibrary.swift */; };
 		C4F768208EB8838CB2807BA8 /* Flask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8980E62B1EBD84DDF15CCC /* Flask.swift */; };
 		CCC1F7902E190403BB38D836 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B68DCAD7D3C21C452AE39233 /* .gitignore */; };
 		CD7A51976D857C99495B56EA /* WineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67917F7F78D6D46779E37961 /* WineApp.swift */; };
 		D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */; };
 		D9A454540FC05E3FF410895B /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */; };
+		DD5BD6F32A20507870C42611 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		EAB1D2558002CF8A4128C23B /* TableDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F961FA484225370B541C677 /* TableDownloadView.swift */; };
-		DD5BD6F32A20507870C42611 /* FlaskSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9A2486B73AD6075059F2C /* FlaskSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,8 +36,8 @@
 			dstPath = lib;
 			dstSubfolderSpec = 12;
 			files = (
+				AEFAE1573044F549008FCA22 /* dxvk in Copy Wine Libraries */,
 				AEA10F1B30438EFE00E66AB1 /* dxmt in Copy Wine Libraries */,
-				AEA10F1930438E8700E66AB1 /* dxvk in Copy Wine Libraries */,
 			);
 			name = "Copy Wine Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,6 +56,7 @@
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA10F1830438E8700E66AB1 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		AEA10F1A30438EFE00E66AB1 /* dxmt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dxmt; sourceTree = "<group>"; };
+		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		B68DCAD7D3C21C452AE39233 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 				DBAA8648F893E17C6BFC69A1 /* FlaskError.swift */,
 				32A3E376576F97C8BD354448 /* Extensions */,
 				67917F7F78D6D46779E37961 /* WineApp.swift */,
-				D3A9A2486B73AD6075059F2C /* FlaskSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -130,6 +130,7 @@
 		AE145555300A499D0049DACC = {
 			isa = PBXGroup;
 			children = (
+				AEFAE1563044F549008FCA22 /* dxvk */,
 				AEA10F1A30438EFE00E66AB1 /* dxmt */,
 				AEA10F1830438E8700E66AB1 /* dxvk */,
 				AE145560300A499D0049DACC /* Flasks */,
@@ -264,7 +265,7 @@
 				CD7A51976D857C99495B56EA /* WineApp.swift in Sources */,
 				D9A454540FC05E3FF410895B /* ConsoleView.swift in Sources */,
 				EAB1D2558002CF8A4128C23B /* TableDownloadView.swift in Sources */,
-				DD5BD6F32A20507870C42611 /* FlaskSettings.swift in Sources */,
+				DD5BD6F32A20507870C42611 /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

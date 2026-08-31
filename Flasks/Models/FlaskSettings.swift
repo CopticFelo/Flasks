@@ -49,7 +49,7 @@ struct FlaskSettings: Codable {
     var dxTranslationLayer: DXTranslationLayer
     var msync: Bool
 
-    mutating func setDXTranslationLayer(to newTL: DXTranslationLayer, prefix: URL)
+    mutating func setDXTranslationLayer(to newTL: DXTranslationLayer)
         throws(FlaskError)
     {
         dxTranslationLayer = newTL
@@ -68,7 +68,7 @@ struct FlaskSettings: Codable {
     /// Creates symlinks in system32 & syswow64 to the DLLs in the @url
     /// DLLs in syswow64 -> the ones in i386-windows
     /// DLLs in system32 -> the ones in x86_64-windows
-    func symlinkDLLs(_ url: URL) throws(FlaskError) {
+    private func symlinkDLLs(_ url: URL) throws(FlaskError) {
         let dlls32 = url.appending(path: "i386-windows")
         let syswow64 = self.prefixPath.appending(path: "drive_c/windows/syswow64")
         let dlls64 = url.appending(path: "x86_64-windows")

@@ -85,7 +85,12 @@ class Flask: Codable, Identifiable {
     func runApp(_ exePath: URL) async throws {
         var dllOverides = ""
         for dll in settings.dxTranslationLayer.dlls {
-            dllOverides += dll + "=n,"
+            dllOverides += dll
+            if dll != settings.dxTranslationLayer.dlls.last {
+                dllOverides += ","
+            } else {
+                dllOverides += "=n"
+            }
         }
         let env = Environment.custom([
             "WINEPREFIX": path.path,
