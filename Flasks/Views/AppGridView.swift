@@ -22,6 +22,7 @@ struct AppGridView: View {
                             error: $error
                         )
                     }
+                    AddAppButton(flask: selectedFlask)
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding()
                     .alert(item: $error) { err in
@@ -116,6 +117,27 @@ struct AppIconView: View {
                     Label("Remove app from Flask", systemImage: "trash")
                 }
             }
+    }
+}
+
+struct AddAppButton: View {
+    var flask: Flask
+
+    var body: some View {
+        VStack(alignment: .center) {
+            Image(systemName: "plus.circle").resizable()
+                .scaledToFit()
+            Text("Add")
+        }.padding()
+            .background(
+                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.1))
+            )
+            .frame(width: 100, height: 100)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                // TODO: Add App Screen
+            }
+            .padding()
     }
 }
 
