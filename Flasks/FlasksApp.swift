@@ -71,7 +71,7 @@ struct FlasksApp: App {
             }.sheet(
                 isPresented: $runnerDownloadSheet,
                 content: {
-                    InstallAppWizard(isPresented: $runnerDownloadSheet).frame(
+                    CreateFlaskWizard(isPresented: $runnerDownloadSheet).frame(
                         width: 400, height: 275
                     ).environment(flaskLibrary)
                 }
