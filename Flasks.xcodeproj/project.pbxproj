@@ -11,7 +11,7 @@
 		2DB85236F5E609E836B78711 /* FlaskLibrary.swift in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C9619C657C8F97BD62219 /* FlaskLibrary.swift */; };
 		49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37E6FB6B94EA215EE46B9CA /* Runner.swift */; };
 		8AD893B67578E6B55D7F9C65 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9C7AAA8EBEBB6B53BFA08F /* URL.swift */; };
-		8CDFBA1DF6C9365734242EB6 /* SelectProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */; };
+		8CDFBA1DF6C9365734242EB6 /* AddAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F2A01470D07F0DFCA791DA /* AddAppView.swift */; };
 		90D1AC62033EA95F7649389C /* CreateFlaskWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* CreateFlaskWizard.swift */; };
 		9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* Downloader.swift */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
@@ -44,7 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = SelectProgramView.swift; sourceTree = "<group>"; };
+		25F2A01470D07F0DFCA791DA /* AddAppView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = AddAppView.swift; sourceTree = "<group>"; };
 		67917F7F78D6D46779E37961 /* WineApp.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineApp.swift; sourceTree = "<group>"; };
 		6B8980E62B1EBD84DDF15CCC /* Flask.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Flask.swift; sourceTree = "<group>"; };
 		8D9C7AAA8EBEBB6B53BFA08F /* URL.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				8E8DF7C2D65FDF3B0D2F353B /* CreateFlaskWizard.swift */,
-				25F2A01470D07F0DFCA791DA /* SelectProgramView.swift */,
 			);
 			path = CreateFlaskWizard;
 			sourceTree = "<group>";
@@ -152,6 +151,7 @@
 				852A46493C1BC3774845F65B /* CreateFlaskWizard */,
 				BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */,
 				8F961FA484225370B541C677 /* TableDownloadView.swift */,
+				25F2A01470D07F0DFCA791DA /* AddAppView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -254,7 +254,7 @@
 				49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */,
 				03C4217D43E0E40D8E2DD41D /* DownloadView.swift in Sources */,
 				90D1AC62033EA95F7649389C /* CreateFlaskWizard.swift in Sources */,
-				8CDFBA1DF6C9365734242EB6 /* SelectProgramView.swift in Sources */,
+				8CDFBA1DF6C9365734242EB6 /* AddAppView.swift in Sources */,
 				C4F768208EB8838CB2807BA8 /* Flask.swift in Sources */,
 				D4C55E1FC7B61D0E84AABD0C /* FlaskError.swift in Sources */,
 				8AD893B67578E6B55D7F9C65 /* URL.swift in Sources */,

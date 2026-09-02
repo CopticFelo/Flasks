@@ -5,6 +5,7 @@ struct AppGridView: View {
     var selectedFlask: Flask
     let columns = [GridItem(.adaptive(minimum: 100.0, maximum: 100.0), spacing: 20.0)]
 
+    @State var showAppAddSheet = false
     @State var selectedProgram: WineApp.ID?
     @State var error: FlaskError?
 
@@ -22,7 +23,7 @@ struct AppGridView: View {
                             error: $error
                         )
                     }
-                    AddAppButton(flask: selectedFlask)
+                    AddAppButton(flask: selectedFlask, showAppAddSheet: $showAppAddSheet)
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding()
                     .alert(item: $error) { err in
@@ -39,6 +40,8 @@ struct AppGridView: View {
             if showConsole {
                 ConsoleView(flask: selectedFlask)
             }
+        }.sheet(isPresented: $showAppAddSheet) {
+            AddAppView(flask: selectedFlask, showAppAddSheet: $showAppAddSheet)
         }
     }
 }
@@ -123,6 +126,8 @@ struct AppIconView: View {
 struct AddAppButton: View {
     var flask: Flask
 
+    @Binding var showAppAddSheet: Bool
+
     var body: some View {
         VStack(alignment: .center) {
             Image(systemName: "plus.circle").resizable()
@@ -135,7 +140,7 @@ struct AddAppButton: View {
             .frame(width: 100, height: 100)
             .contentShape(Rectangle())
             .onTapGesture {
-                // TODO: Add App Screen
+                showAppAddSheet = true
             }
             .padding()
     }
