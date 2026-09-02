@@ -14,6 +14,7 @@ struct FlasksApp: App {
     @State private var flaskLibrary = FlaskLibrary()
 
     @State private var selectedFlask: Flask.ID?
+    // FIX: Outdated name for the following var
     @State var runnerDownloadSheet = false
     @State var showConsole = false
 
@@ -22,9 +23,20 @@ struct FlasksApp: App {
     var body: some Scene {
         Window("Flasks", id: "0") {
             NavigationSplitView {
-                List(flaskLibrary.flaskList, selection: $selectedFlask) {
-                    Text($0.name)
+                List(selection: $selectedFlask) {
+                    Section {
+                        ForEach(flaskLibrary.flaskList) { flask in
+                            Text(flask.name)
+                        }
+                    }
                 }.navigationTitle("Flasks")
+                Section {
+                    Button {
+                        runnerDownloadSheet = true
+                    } label: {
+                        Label("Create Flask", systemImage: "plus")
+                    }.padding()
+                }
             } detail: {
                 if let flask = flaskLibrary.flaskList.first(where: { $0.id == selectedFlask }) {
                     AppGridView(
@@ -47,26 +59,7 @@ struct FlasksApp: App {
                                 Label("Show Console", systemImage: "apple.terminal")
                             }
                         }
-                        ToolbarSpacer()
-                        ToolbarItem(placement: .primaryAction) {
-                            Button(action: {
-                                runnerDownloadSheet = true
-                            }) {
-                                Label("Add Item", systemImage: "plus")
-                            }
-                        }
                     }
-                } else {
-                    VStack {}
-                        .toolbar {
-                            ToolbarItem(placement: .primaryAction) {
-                                Button(action: {
-                                    runnerDownloadSheet = true
-                                }) {
-                                    Label("Add Item", systemImage: "plus")
-                                }
-                            }
-                        }
                 }
             }.sheet(
                 isPresented: $runnerDownloadSheet,
