@@ -14,6 +14,7 @@
 		8CDFBA1DF6C9365734242EB6 /* AddAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F2A01470D07F0DFCA791DA /* AddAppView.swift */; };
 		90D1AC62033EA95F7649389C /* CreateFlaskWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* CreateFlaskWizard.swift */; };
 		9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* Downloader.swift */; };
+		AE2927823049FD98008D78C3 /* wrestool in Copy Helper binaries */ = {isa = PBXBuildFile; fileRef = AE2927813049FD98008D78C3 /* wrestool */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
 		AEA10F1B30438EFE00E66AB1 /* dxmt in Copy Wine Libraries */ = {isa = PBXBuildFile; fileRef = AEA10F1A30438EFE00E66AB1 /* dxmt */; };
 		AEC759893027825200C079E1 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = AEC759883027825200C079E1 /* Subprocess */; };
@@ -29,6 +30,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AE2927803049F462008D78C3 /* Copy Helper binaries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = bin;
+			dstSubfolderSpec = 12;
+			files = (
+				AE2927823049FD98008D78C3 /* wrestool in Copy Helper binaries */,
+			);
+			name = "Copy Helper binaries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEA10F0C30438D8B00E66AB1 /* Copy Wine Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,6 +64,7 @@
 		8E8DF7C2D65FDF3B0D2F353B /* CreateFlaskWizard.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = CreateFlaskWizard.swift; sourceTree = "<group>"; };
 		8F961FA484225370B541C677 /* TableDownloadView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = TableDownloadView.swift; sourceTree = "<group>"; };
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE2927813049FD98008D78C3 /* wrestool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = wrestool; sourceTree = "<group>"; };
 		AEA10F1830438E8700E66AB1 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		AEA10F1A30438EFE00E66AB1 /* dxmt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dxmt; sourceTree = "<group>"; };
 		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
@@ -126,6 +139,7 @@
 		AE145555300A499D0049DACC = {
 			isa = PBXGroup;
 			children = (
+				AE2927813049FD98008D78C3 /* wrestool */,
 				AEFAE1563044F549008FCA22 /* dxvk */,
 				AEA10F1A30438EFE00E66AB1 /* dxmt */,
 				AEA10F1830438E8700E66AB1 /* dxvk */,
@@ -177,6 +191,7 @@
 				AE14555B300A499D0049DACC /* Frameworks */,
 				AE14555C300A499D0049DACC /* Resources */,
 				AEA10F0C30438D8B00E66AB1 /* Copy Wine Libraries */,
+				AE2927803049F462008D78C3 /* Copy Helper binaries */,
 			);
 			buildRules = (
 			);

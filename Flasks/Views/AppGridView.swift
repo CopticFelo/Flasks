@@ -54,19 +54,28 @@ struct AppIconView: View {
     @Binding var error: FlaskError?
 
     @State var isRunning = false
+    @State var icon: NSImage?
 
     var body: some View {
         VStack(alignment: .center) {
             if isRunning {
                 PhaseAnimator([true, false]) { phase in
-                    Image(systemName: "questionmark.app").resizable()
-                        .scaledToFit().offset(y: phase ? -8 : 0)
+                    if let icon = self.icon {
+                        Image(nsImage: icon).resizable().scaledToFit().offset(y: phase ? -8 : 0)
+                    } else {
+                        Image(systemName: "questionmark.app").resizable()
+                            .scaledToFit().offset(y: phase ? -8 : 0)
+                    }
                 } animation: { _ in
                     return Animation.interpolatingSpring(stiffness: 170, damping: 12)
                 }
             } else {
-                Image(systemName: "questionmark.app").resizable()
-                    .scaledToFit()
+                if let icon = self.icon {
+                    Image(nsImage: icon).resizable().scaledToFit()
+                } else {
+                    Image(systemName: "questionmark.app").resizable()
+                        .scaledToFit()
+                }
             }
             Text("\(wineApp.appPath.lastPathComponent.prefix(20))").lineLimit(1)
         }.padding()
@@ -119,6 +128,8 @@ struct AppIconView: View {
                 } label: {
                     Label("Remove app from Flask", systemImage: "trash")
                 }
+            }.task {
+                self.icon = try? await wineApp.getIcon()
             }
     }
 }
