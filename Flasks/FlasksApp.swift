@@ -15,7 +15,7 @@ struct FlasksApp: App {
 
     @State private var selectedFlask: Flask.ID?
     // FIX: Outdated name for the following var
-    @State var runnerDownloadSheet = false
+    @State var showCreateFlaskSheet = false
     @State var showConsole = false
 
     @Environment(\.openWindow) private var openWindow
@@ -32,7 +32,7 @@ struct FlasksApp: App {
                 }.navigationTitle("Flasks")
                 Section {
                     Button {
-                        runnerDownloadSheet = true
+                        showCreateFlaskSheet = true
                     } label: {
                         Label("Create Flask", systemImage: "plus")
                     }.padding()
@@ -62,9 +62,9 @@ struct FlasksApp: App {
                     }
                 }
             }.sheet(
-                isPresented: $runnerDownloadSheet,
+                isPresented: $showCreateFlaskSheet,
                 content: {
-                    CreateFlaskWizard(isPresented: $runnerDownloadSheet).frame(
+                    CreateFlaskWizard(isPresented: $showCreateFlaskSheet).frame(
                         width: 400, height: 275
                     ).environment(flaskLibrary)
                 }
