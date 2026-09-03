@@ -17,7 +17,7 @@ struct ConsoleLog: Identifiable, Equatable {
 
 @Observable
 class Flask: Codable, Identifiable {
-    let id = UUID()
+    let id: String
     var settings: FlaskSettings
     var registeredApps: [WineApp]
     let runner: Runner
@@ -26,7 +26,8 @@ class Flask: Codable, Identifiable {
 
     var consoleOutput: [ConsoleLog] = []
 
-    init(registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
+    init(id: String, registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
+        self.id = id
         self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .wined3d, msync: false)
         self.registeredApps = registeredApps
         self.runner = runner
@@ -36,6 +37,7 @@ class Flask: Codable, Identifiable {
 
     // Json coding boilerplate
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case settings = "settings"
         case registeredApps = "registered_apps"
         case runner = "runner"
@@ -45,6 +47,7 @@ class Flask: Codable, Identifiable {
 
     required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
         settings = try container.decode(FlaskSettings.self, forKey: .settings)
         registeredApps = try container.decode([WineApp].self, forKey: .registeredApps)
         runner = try container.decode(Runner.self, forKey: .runner)
@@ -54,6 +57,7 @@ class Flask: Codable, Identifiable {
 
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
         try container.encode(settings, forKey: .settings)
         try container.encode(registeredApps, forKey: .registeredApps)
         try container.encode(runner, forKey: .runner)

@@ -69,7 +69,9 @@ class FlaskLibrary {
             case .signaled(let code):
                 throw FlaskError.wineError(detail: "Process terminated with signal \(code)")
             }
-            let flask = Flask(registeredApps: [], runner: runner, path: prefixDir, name: name)
+            let flask = Flask(
+                id: UUID().uuidString, registeredApps: [], runner: runner, path: prefixDir,
+                name: name)
             try flask.saveJson()
             return flask
         } catch let error as CocoaError {

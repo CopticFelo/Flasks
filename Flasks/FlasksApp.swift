@@ -13,7 +13,7 @@ import XcodebuildNvimPreview
 struct FlasksApp: App {
     @State private var flaskLibrary = FlaskLibrary()
 
-    @State private var selectedFlask: Flask.ID?
+    @AppStorage("selectedFlask") private var selectedFlask: String?
     // FIX: Outdated name for the following var
     @State var showCreateFlaskSheet = false
     @State var showConsole = false
@@ -26,7 +26,7 @@ struct FlasksApp: App {
                 List(selection: $selectedFlask) {
                     Section {
                         ForEach(flaskLibrary.flaskList) { flask in
-                            Text(flask.name)
+                            Text(flask.name).tag(flask.id)
                         }
                     }
                 }.navigationTitle("Flasks")
@@ -38,7 +38,9 @@ struct FlasksApp: App {
                     }.padding()
                 }
             } detail: {
-                if let flask = flaskLibrary.flaskList.first(where: { $0.id == selectedFlask }) {
+                if let flask = flaskLibrary.flaskList.first(where: {
+                    return $0.id == selectedFlask
+                }) {
                     AppGridView(
                         selectedFlask: flask,
                         showConsole: $showConsole
