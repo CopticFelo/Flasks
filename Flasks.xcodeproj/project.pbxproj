@@ -15,6 +15,7 @@
 		90D1AC62033EA95F7649389C /* CreateFlaskWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DF7C2D65FDF3B0D2F353B /* CreateFlaskWizard.swift */; };
 		9ACBEC619F03749E7BF88E75 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D76F916FC6C21A71FF41A5 /* Downloader.swift */; };
 		AE2927823049FD98008D78C3 /* wrestool in Copy Helper binaries */ = {isa = PBXBuildFile; fileRef = AE2927813049FD98008D78C3 /* wrestool */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AE292784304ABEE0008D78C3 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE292783304ABEE0008D78C3 /* Resources.xcassets */; };
 		AE44FDAE300D97A700F31CC4 /* XcodebuildNvimPreview in Frameworks */ = {isa = PBXBuildFile; productRef = AE44FDAD300D97A700F31CC4 /* XcodebuildNvimPreview */; };
 		AEA10F1B30438EFE00E66AB1 /* dxmt in Copy Wine Libraries */ = {isa = PBXBuildFile; fileRef = AEA10F1A30438EFE00E66AB1 /* dxmt */; };
 		AEC759893027825200C079E1 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = AEC759883027825200C079E1 /* Subprocess */; };
@@ -65,6 +66,7 @@
 		8F961FA484225370B541C677 /* TableDownloadView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = TableDownloadView.swift; sourceTree = "<group>"; };
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2927813049FD98008D78C3 /* wrestool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = wrestool; sourceTree = "<group>"; };
+		AE292783304ABEE0008D78C3 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		AEA10F1830438E8700E66AB1 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		AEA10F1A30438EFE00E66AB1 /* dxmt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dxmt; sourceTree = "<group>"; };
 		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		AE145555300A499D0049DACC = {
 			isa = PBXGroup;
 			children = (
+				AE292783304ABEE0008D78C3 /* Resources.xcassets */,
 				AE2927813049FD98008D78C3 /* wrestool */,
 				AEFAE1563044F549008FCA22 /* dxvk */,
 				AEA10F1A30438EFE00E66AB1 /* dxmt */,
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCC1F7902E190403BB38D836 /* .gitignore in Resources */,
+				AE292784304ABEE0008D78C3 /* Resources.xcassets in Resources */,
 				2DB85236F5E609E836B78711 /* FlaskLibrary.swift in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,6 +412,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -439,6 +444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
