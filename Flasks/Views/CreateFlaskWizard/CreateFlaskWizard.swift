@@ -25,6 +25,7 @@ struct CreateFlaskWizard: View {
     @State var name = ""
 
     @State var selectedBackend: DXTranslationLayer? = .wined3d
+    @State var sync: WineSync? = WineSync.none
 
     @State var error: FlaskError?
     @State var isCreating = false
@@ -45,7 +46,7 @@ struct CreateFlaskWizard: View {
                     }
                 }.formStyle(.grouped).scrollContentBackground(.hidden)
             } else {
-                OptionView(selectedBackend: $selectedBackend)
+                OptionView(selectedBackend: $selectedBackend, sync: $sync)
                 Spacer()
                 if let error = error {
                     Text("\(error.localizedDescription)").foregroundStyle(.red).fontWeight(

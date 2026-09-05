@@ -44,10 +44,25 @@ enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
     }
 }
 
+enum WineSync: String, Identifiable, Codable, CaseIterable {
+    var id: String { rawValue }
+    case msync = "MSync"
+    case esync = "ESync"
+    case none = "None"
+
+    var getEnvVar: String? {
+        switch self {
+        case .msync: return "WINEMSYNC"
+        case .esync: return "WINEESYNC"
+        default: return nil
+        }
+    }
+}
+
 struct FlaskSettings: Codable {
     let prefixPath: URL
     var dxTranslationLayer: DXTranslationLayer
-    var msync: Bool
+    var sync: WineSync
 
     mutating func setDXTranslationLayer(to newTL: DXTranslationLayer)
         throws(FlaskError)

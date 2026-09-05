@@ -28,7 +28,7 @@ class Flask: Codable, Identifiable {
 
     init(id: String, registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
         self.id = id
-        self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .wined3d, msync: false)
+        self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .wined3d, sync: .none)
         self.registeredApps = registeredApps
         self.runner = runner
         self.path = path
@@ -96,10 +96,14 @@ class Flask: Codable, Identifiable {
                 dllOverides += "=n"
             }
         }
-        let env = Environment.custom([
+        var envVars: [Environment.Key: String] = [
             "WINEPREFIX": path.path,
             "WINEDLLOVERRIDES": dllOverides,
-        ])
+        ]
+        if let syncVar = settings.sync.getEnvVar {
+            envVars[Environment.Key(stringLiteral: syncVar)] = "1"
+        }
+        let env = Environment.custom(envVars)
         do {
             let appName = exePath.lastPathComponent
             let result = try await run(
