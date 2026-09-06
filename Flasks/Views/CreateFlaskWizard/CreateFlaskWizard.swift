@@ -24,8 +24,8 @@ struct CreateFlaskWizard: View {
     @State var selectedWinVer: String = "win10"
     @State var name = ""
 
-    @State var selectedBackend: DXTranslationLayer? = .wined3d
-    @State var sync: WineSync? = WineSync.none
+    @State var selectedBackend: DXTranslationLayer = .wined3d
+    @State var sync: WineSync = WineSync.none
 
     @State var error: FlaskError?
     @State var isCreating = false

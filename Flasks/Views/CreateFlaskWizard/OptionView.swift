@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct OptionView: View {
-    @Binding var selectedBackend: DXTranslationLayer?
-    @Binding var sync: WineSync?
+    @Binding var selectedBackend: DXTranslationLayer
+    @Binding var sync: WineSync
     var body: some View {
         Form {
             Picker("Rendering backend", selection: $selectedBackend) {
