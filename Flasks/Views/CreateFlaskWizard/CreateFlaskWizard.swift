@@ -103,7 +103,8 @@ struct CreateFlaskWizard: View {
                                             windowsString: selectedWinVer)
                                         // Set DXTranslationLayer
                                         try flask.settings.setDXTranslationLayer(
-                                            to: selectedBackend ?? .wined3d)
+                                            to: selectedBackend)
+                                        flask.settings.sync = self.sync
                                         try flask.saveJson()
                                         flaskLibrary.flaskList.append(flask)
                                         isPresented = false
