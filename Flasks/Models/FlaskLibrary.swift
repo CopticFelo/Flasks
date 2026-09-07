@@ -80,4 +80,15 @@ class FlaskLibrary {
             throw FlaskError.processError(detail: error)
         }
     }
+
+    func deleteFlask(flask: Flask) throws(FlaskError) {
+        do {
+            try FileManager.default.removeItem(at: flask.path)
+            flaskList.removeAll(where: { $0.id == flask.id })
+        } catch let error as CocoaError {
+            throw FlaskError.fileError(detail: error)
+        } catch {
+            throw FlaskError.unknownError
+        }
+    }
 }

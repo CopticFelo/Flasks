@@ -18,6 +18,7 @@ struct FlasksApp: App {
     @State var showCreateFlaskSheet = false
     @State var showFlaskSettingsSheet = false
     @State var showConsole = false
+    @State var error: FlaskError?
 
     @Environment(\.openWindow) private var openWindow
 
@@ -27,7 +28,17 @@ struct FlasksApp: App {
                 List(selection: $selectedFlask) {
                     Section {
                         ForEach(flaskLibrary.flaskList) { flask in
-                            Text(flask.name).tag(flask.id)
+                            Text(flask.name).tag(flask.id).contextMenu {
+                                Button {
+                                    do {
+                                        try flaskLibrary.deleteFlask(flask: flask)
+                                    } catch {
+                                        self.error = error as? FlaskError
+                                    }
+                                } label: {
+                                    Label("Delete Flask", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                 }.navigationTitle("Flasks")
