@@ -86,6 +86,23 @@ class Flask: Codable, Identifiable {
         try saveJson()
     }
 
+    func killAll() async throws(FlaskError) {
+        let env = Environment.custom(["WINEPREFIX": path.path])
+        do {
+            _ = try await run(
+                .path(FilePath(runner.binPath.appending(path: "/wineserver").path)),
+                arguments: ["-k"],
+                environment: env,
+                input: .none,
+                output: .discarded,
+            )
+        } catch let error as SubprocessError {
+            throw FlaskError.processError(detail: error)
+        } catch {
+            throw FlaskError.unknownError
+        }
+    }
+
     func runApp(_ exePath: URL) async throws {
         var dllOverides = ""
         for dll in settings.dxTranslationLayer.dlls {
@@ -119,6 +136,38 @@ class Flask: Codable, Identifiable {
                         self.consoleOutput.append(
                             ConsoleLog(
                                 appName: appName, runnerName: self.runner.name, message: line))
+                    }
+                }
+            }
+            switch result.terminationStatus {
+            case .exited(let code):
+                if code != 0 {
+                    throw FlaskError.wineError(detail: "Process exited with code \(code)")
+                }
+            case .signaled(let code):
+                throw FlaskError.wineError(detail: "Process terminated with signal \(code)")
+            }
+        } catch let error as SubprocessError {
+            throw FlaskError.processError(detail: error)
+        }
+    }
+
+    func runApp(_ name: String) async throws {
+        let env = Environment.custom(["WINEPREFIX": path.path])
+        do {
+            let result = try await run(
+                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
+                arguments: [name],
+                environment: env,
+                input: .none,
+                output: .sequence,
+                error: .combinedWithOutput
+            ) { exec in
+                for try await line in exec.standardOutput.strings() {
+                    DispatchQueue.main.async {
+                        self.consoleOutput.append(
+                            ConsoleLog(
+                                appName: name, runnerName: self.runner.name, message: line))
                     }
                 }
             }

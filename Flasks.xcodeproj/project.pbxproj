@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03C4217D43E0E40D8E2DD41D /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F17412AD2EDE987CFEC8E /* DownloadView.swift */; };
 		2DB85236F5E609E836B78711 /* FlaskLibrary.swift in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C9619C657C8F97BD62219 /* FlaskLibrary.swift */; };
+		3C15C16EECA5ED987C294115 /* FlaskSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEC9AF36B8BC9AA7655969B /* FlaskSidebar.swift */; };
 		49A6F96170EADC42B9A0F2E7 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37E6FB6B94EA215EE46B9CA /* Runner.swift */; };
 		6DAD96871734AA4A9D5BBDD6 /* FlaskSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427D3A3A55195B9748308250 /* FlaskSettingsView.swift */; };
 		8AD893B67578E6B55D7F9C65 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9C7AAA8EBEBB6B53BFA08F /* URL.swift */; };
@@ -74,6 +75,7 @@
 		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		B68DCAD7D3C21C452AE39233 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
+		BDEC9AF36B8BC9AA7655969B /* FlaskSidebar.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = FlaskSidebar.swift; path = FlaskSidebar.swift; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
 		D1D76F916FC6C21A71FF41A5 /* Downloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				8F961FA484225370B541C677 /* TableDownloadView.swift */,
 				25F2A01470D07F0DFCA791DA /* AddAppView.swift */,
 				427D3A3A55195B9748308250 /* FlaskSettingsView.swift */,
+				BDEC9AF36B8BC9AA7655969B /* FlaskSidebar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				EAB1D2558002CF8A4128C23B /* TableDownloadView.swift in Sources */,
 				DD5BD6F32A20507870C42611 /* (null) in Sources */,
 				6DAD96871734AA4A9D5BBDD6 /* FlaskSettingsView.swift in Sources */,
+				3C15C16EECA5ED987C294115 /* FlaskSidebar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

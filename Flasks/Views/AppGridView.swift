@@ -12,31 +12,34 @@ struct AppGridView: View {
     @Binding var showConsole: Bool
     var body: some View {
         VSplitView {
-            ScrollView {
-                LazyVGrid(
-                    columns: columns, alignment: .leading
-                ) {
-                    ForEach(selectedFlask.registeredApps) { wineApp in
-                        AppIconView(
-                            wineApp: wineApp,
-                            flask: selectedFlask, selectedAppID: $selectedProgram,
-                            error: $error
-                        )
-                    }
-                    AddAppButton(flask: selectedFlask, showAppAddSheet: $showAppAddSheet)
-                }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    .padding()
-                    .alert(item: $error) { err in
-                        Alert(
-                            title: Text(err.localizedDescription),
-                            message: Text(
-                                err.recoverySuggestion
-                                    ?? "Please open an issue on https://github.com/CopticFelo/Flasks/issues"
-                            ),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
-            }.frame(minHeight: 300.0)
+            ZStack(alignment: .trailing) {
+                ScrollView {
+                    LazyVGrid(
+                        columns: columns, alignment: .leading
+                    ) {
+                        ForEach(selectedFlask.registeredApps) { wineApp in
+                            AppIconView(
+                                wineApp: wineApp,
+                                flask: selectedFlask, selectedAppID: $selectedProgram,
+                                error: $error
+                            )
+                        }
+                        AddAppButton(flask: selectedFlask, showAppAddSheet: $showAppAddSheet)
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        .padding()
+                        .alert(item: $error) { err in
+                            Alert(
+                                title: Text(err.localizedDescription),
+                                message: Text(
+                                    err.recoverySuggestion
+                                        ?? "Please open an issue on https://github.com/CopticFelo/Flasks/issues"
+                                ),
+                                dismissButton: .default(Text("OK"))
+                            )
+                        }
+                }.frame(minHeight: 300.0)
+                FlaskSidebar(flask: selectedFlask)
+            }
             if showConsole {
                 ConsoleView(flask: selectedFlask)
             }
