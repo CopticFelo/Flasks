@@ -16,7 +16,6 @@ struct FlasksApp: App {
     @AppStorage("selectedFlask") private var selectedFlask: String?
     // FIX: Outdated name for the following var
     @State var showCreateFlaskSheet = false
-    @State var showFlaskSettingsSheet = false
     @State var showConsole = false
     @State var error: FlaskError?
 
@@ -75,11 +74,6 @@ struct FlasksApp: App {
                         }
                         ToolbarSpacer()
                         ToolbarItem(placement: .primaryAction) {
-                            Button(action: {
-                                showFlaskSettingsSheet = true
-                            }) {
-                                Label("Flask Settings", systemImage: "gear")
-                            }
                         }
                     }
                 }
@@ -89,18 +83,6 @@ struct FlasksApp: App {
                     CreateFlaskWizard(isPresented: $showCreateFlaskSheet).frame(
                         width: 400, height: 275
                     ).environment(flaskLibrary)
-                }
-            ).sheet(
-                isPresented: $showFlaskSettingsSheet,
-                content: {
-                    if let flask = flaskLibrary.flaskList.first(where: {
-                        return $0.id == selectedFlask
-                    }) {
-                        FlaskSettingsView(flask: flask, isPresented: $showFlaskSettingsSheet)
-                            .frame(
-                                width: 400, height: 275
-                            ).environment(flaskLibrary)
-                    }
                 }
             )
         }

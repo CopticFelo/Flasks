@@ -4,6 +4,8 @@ struct FlaskSidebar: View {
     let flask: Flask
 
     @State var error: FlaskError?
+    @State var showFlaskSettingsSheet = false
+
     var body: some View {
         VStack(alignment: .center) {
             HStack {
@@ -11,6 +13,14 @@ struct FlaskSidebar: View {
                 Text("\(flask.name)").font(.largeTitle).bold()
             }
             Form {
+                Section {
+                    Button(
+                        "Flask Settings", systemImage: "gear",
+                        action: { showFlaskSettingsSheet = true }
+                    )
+                    .buttonStyle(
+                        .borderless)
+                }
                 Section {
                     Button(
                         "Kill all Programs", systemImage: "xmark.circle",
@@ -61,7 +71,7 @@ struct FlaskSidebar: View {
                 }
             }.formStyle(.grouped)
             Spacer()
-        }.padding().frame(width: 350).frame(maxHeight: .infinity).background(.ultraThinMaterial)
+        }.padding().frame(width: 350).frame(maxHeight: .infinity).background(.ultraThickMaterial)
             .alert(item: $error) { err in
                 Alert(
                     title: Text(err.localizedDescription),
@@ -72,5 +82,14 @@ struct FlaskSidebar: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .sheet(
+                isPresented: $showFlaskSettingsSheet,
+                content: {
+                    FlaskSettingsView(flask: flask, isPresented: $showFlaskSettingsSheet)
+                        .frame(
+                            width: 400, height: 275
+                        )
+                }
+            )
     }
 }
