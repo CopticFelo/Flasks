@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct FlaskSettingsView: View {
-    @Environment(FlaskLibrary.self) private var flaskLibrary
-
     let flask: Flask
 
     @Binding var isPresented: Bool
