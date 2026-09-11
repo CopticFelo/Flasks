@@ -10,6 +10,7 @@ struct AppGridView: View {
     @State var error: FlaskError?
 
     @Binding var showConsole: Bool
+    @Binding var showSidebar: Bool
     var body: some View {
         VSplitView {
             ZStack(alignment: .trailing) {
@@ -38,7 +39,9 @@ struct AppGridView: View {
                             )
                         }
                 }.frame(minHeight: 300.0)
-                FlaskSidebar(flask: selectedFlask)
+                if showSidebar {
+                    FlaskSidebar(flask: selectedFlask)
+                }
             }
             if showConsole {
                 ConsoleView(flask: selectedFlask)

@@ -17,6 +17,7 @@ struct FlasksApp: App {
     // FIX: Outdated name for the following var
     @State var showCreateFlaskSheet = false
     @State var showConsole = false
+    @State var showSidebar = false
     @State var error: FlaskError?
 
     @Environment(\.openWindow) private var openWindow
@@ -54,7 +55,8 @@ struct FlasksApp: App {
                 }) {
                     AppGridView(
                         selectedFlask: flask,
-                        showConsole: $showConsole
+                        showConsole: $showConsole,
+                        showSidebar: $showSidebar
                     )
                     .toolbar {
                         ToolbarItem(placement: .primaryAction) {
@@ -74,6 +76,9 @@ struct FlasksApp: App {
                         }
                         ToolbarSpacer()
                         ToolbarItem(placement: .primaryAction) {
+                            Button(
+                                "Toggle Sidebar", systemImage: "sidebar.right",
+                                action: { showSidebar = !showSidebar })
                         }
                     }
                 }
