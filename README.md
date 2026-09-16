@@ -3,7 +3,7 @@ A FOSS MacOS Wine frontend mainly intended for testing/development.
 <img width="896" height="818" alt="Screenshot" src="https://github.com/user-attachments/assets/3c1c43f2-da38-414f-ad8a-b9bdb8b74157" />
 
 ## Installing
-Download the dmg from the [latest release](github.com/CopticFelo/Flasks/releases/latest) and copy the app to your Applications folder.
+Download the dmg from the [latest release](https://github.com/CopticFelo/Flasks/releases/latest) and copy the app to your Applications folder.
 
 ## Usage
 You create Flasks (aka Wine Prefixes) with Runners (aka Wine Versions) and add apps to your Flasks (aka "Pin" them to your prefix).
