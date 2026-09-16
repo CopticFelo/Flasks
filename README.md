@@ -12,7 +12,7 @@ You create Flasks (aka Wine Prefixes) with Runners (aka Wine Versions) and add a
 Your experience is gonna vary depending on what runner you use, upstream wine (wine-devel) is fairly basic and can barely run anything so use GPTK when you can.
 
 ## TODOs
-- [ ] Support downloading GPTK
+- [X] Support downloading GPTK
 - [ ] Support DXMT and D3DMetal fully
 - [ ] Better docs
 - [ ] Support .msi files and Install wizards
