@@ -60,7 +60,7 @@
 
 /* Begin PBXFileReference section */
 		25F2A01470D07F0DFCA791DA /* AddAppView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = AddAppView.swift; sourceTree = "<group>"; };
-		427D3A3A55195B9748308250 /* FlaskSettingsView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = FlaskSettingsView.swift; path = FlaskSettingsView.swift; sourceTree = "<group>"; };
+		427D3A3A55195B9748308250 /* FlaskSettingsView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = FlaskSettingsView.swift; sourceTree = "<group>"; };
 		67917F7F78D6D46779E37961 /* WineApp.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineApp.swift; sourceTree = "<group>"; };
 		6B8980E62B1EBD84DDF15CCC /* Flask.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Flask.swift; sourceTree = "<group>"; };
 		8D9C7AAA8EBEBB6B53BFA08F /* URL.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		B68DCAD7D3C21C452AE39233 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BC5E7E4313D79B7FE6B5FABC /* ConsoleView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
-		BDEC9AF36B8BC9AA7655969B /* FlaskSidebar.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = FlaskSidebar.swift; path = FlaskSidebar.swift; sourceTree = "<group>"; };
+		BDEC9AF36B8BC9AA7655969B /* FlaskSidebar.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = FlaskSidebar.swift; sourceTree = "<group>"; };
 		C37E6FB6B94EA215EE46B9CA /* Runner.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		C7997B499A640F8952A17B4B /* WineLibrary.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = WineLibrary.swift; sourceTree = "<group>"; };
 		D1D76F916FC6C21A71FF41A5 /* Downloader.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flasks.Flasks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -466,7 +466,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flasks.Flasks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
