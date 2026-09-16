@@ -28,7 +28,11 @@ class WineLibrary {
     func createRunnerEntry(_ dir: String, runnersDir: URL) async -> Runner? {
         let binPath = runnersDir.appending(path: dir + "/bin")
         guard FileManager.default.fileExists(atPath: binPath.path) else { return nil }
-        let wineVersion = await getWineVersion(binPath.appending(path: "/wine"))
+        var winePath = binPath.appending(path: "/wine")
+        if !FileManager.default.fileExists(atPath: winePath.path) {
+            winePath = binPath.appending(path: "/wine64")
+        }
+        let wineVersion = await getWineVersion(winePath)
         guard let wineVersion else { return nil }
         let runner = Runner(
             name: dir, binPath: binPath,

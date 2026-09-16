@@ -21,6 +21,22 @@ struct DownloadView: View {
                         "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.10/wine-devel-11.10-osx64.tar.xz"
                 )
         ),
+        Downloadable(
+            name: "gptk-3.0",
+            url:
+                URL(
+                    string:
+                        "https://github.com/Gcenx/game-porting-toolkit/releases/download/Game-Porting-Toolkit-3.0-3/game-porting-toolkit-3.0-3.tar.xz"
+                )
+        ),
+        Downloadable(
+            name: "gptk-1.1",
+            url:
+                URL(
+                    string:
+                        "https://github.com/Gcenx/game-porting-toolkit/releases/download/Game-Porting-Toolkit-1.1-gstreamer/game-porting-toolkit-1.1.tar.xz"
+                )
+        ),
     ]
 
     @State var runnerLibrary = WineLibrary()

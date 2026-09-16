@@ -121,10 +121,14 @@ class Flask: Codable, Identifiable {
             envVars[Environment.Key(stringLiteral: syncVar)] = "1"
         }
         let env = Environment.custom(envVars)
+        var winePath = runner.binPath.appending(path: "/wine")
+        if !FileManager.default.fileExists(atPath: winePath.path) {
+            winePath = runner.binPath.appending(path: "/wine64")
+        }
         do {
             let appName = exePath.lastPathComponent
             let result = try await run(
-                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
+                .path(FilePath(winePath.path)),
                 arguments: [exePath.path],
                 environment: env,
                 input: .none,

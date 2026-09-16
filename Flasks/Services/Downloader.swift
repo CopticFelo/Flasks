@@ -88,9 +88,20 @@ class Downloader: NSObject {
             {
                 try FileManager.default.removeItem(at: dst)
             }
-            try FileManager.default.moveItem(
-                at: path.deletingLastPathComponent().appending(
+            let winePaths = [
+                path.deletingLastPathComponent().appending(
                     path: "Wine Devel.app/Contents/Resources/wine"),
+                path.deletingLastPathComponent().appending(
+                    path: "Game Porting Toolkit.app/Contents/Resources/wine"),
+            ]
+            guard
+                let src = winePaths.first(where: { FileManager.default.fileExists(atPath: $0.path) }
+                )
+            else {
+                throw CocoaError(.fileNoSuchFile)
+            }
+            try FileManager.default.moveItem(
+                at: src,
                 to: dst)
             state = .complete
             // TODO: Cleanup

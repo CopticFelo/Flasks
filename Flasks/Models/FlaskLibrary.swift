@@ -55,8 +55,12 @@ class FlaskLibrary {
             let env = Environment.custom([
                 "WINEPREFIX": prefixDir.path
             ])
+            var winePath = runner.binPath.appending(path: "/wine")
+            if !FileManager.default.fileExists(atPath: winePath.path) {
+                winePath = runner.binPath.appending(path: "/wine64")
+            }
             let result = try await run(
-                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
+                .path(FilePath(winePath.path)),
                 arguments: ["wineboot", "-u"],
                 environment: env,
                 output: .string(limit: 4096)
