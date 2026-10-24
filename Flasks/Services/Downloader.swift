@@ -9,6 +9,16 @@ struct Downloadable: Identifiable {
     let url: URL?
 }
 
+extension Downloadable {
+    static let gptk3 = Downloadable(
+        name: "gptk-3.0",
+        url: URL(
+            string:
+                "https://github.com/Gcenx/game-porting-toolkit/releases/download/Game-Porting-Toolkit-3.0-3/game-porting-toolkit-3.0-3.tar.xz"
+        )
+    )
+}
+
 enum DownloadState {
     case extracting
     case downloading
@@ -47,6 +57,8 @@ class Downloader: NSObject {
 
     func startDownload() {
         guard let url = self.downloadable.url else { return }
+        self.error = nil
+        self.progress = 0
         let task = self.session.downloadTask(with: url)
         task.resume()
         self.downloadTask = task
@@ -103,7 +115,9 @@ class Downloader: NSObject {
             try FileManager.default.moveItem(
                 at: src,
                 to: dst)
-            state = .complete
+            DispatchQueue.main.async {
+                self.state = .complete
+            }
             // TODO: Cleanup
         } catch let error as SubprocessError {
             DispatchQueue.main.async {
@@ -133,13 +147,15 @@ extension Downloader: URLSessionDownloadDelegate {
     func urlSession(
         _ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?
     ) {
-        guard let networkError = error as? URLError else { return }
-        if networkError.code == .cancelled {
-            return
-        }
+        guard let error else { return }
         DispatchQueue.main.async {
             self.state = .idle
-            self.error = FlaskError.networkError(detail: networkError)
+            if let networkError = error as? URLError {
+                if networkError.code == .cancelled { return }
+                self.error = FlaskError.networkError(detail: networkError)
+            } else {
+                self.error = FlaskError.unknownError
+            }
         }
     }
     func urlSession(

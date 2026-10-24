@@ -16,6 +16,7 @@ struct FlasksApp: App {
     @AppStorage("selectedFlask") private var selectedFlask: String?
     // FIX: Outdated name for the following var
     @State var showCreateFlaskSheet = false
+    @State var createDefaultFlask = false
     @State var showConsole = false
     @State var showSidebar = false
     @State var error: FlaskError?
@@ -25,8 +26,8 @@ struct FlasksApp: App {
     var body: some Scene {
         Window("Flasks", id: "0") {
             NavigationSplitView {
-                List(selection: $selectedFlask) {
-                    Section {
+                Section {
+                    List(selection: $selectedFlask) {
                         ForEach(flaskLibrary.flaskList) { flask in
                             Text(flask.name).tag(flask.id).contextMenu {
                                 Button {
@@ -42,6 +43,11 @@ struct FlasksApp: App {
                         }
                     }
                 }.navigationTitle("Flasks")
+                    .task {
+                        if flaskLibrary.flaskList.isEmpty {
+                            createDefaultFlask = true
+                        }
+                    }
                 Section {
                     Button {
                         showCreateFlaskSheet = true
@@ -89,7 +95,13 @@ struct FlasksApp: App {
                         width: 400, height: 275
                     ).environment(flaskLibrary)
                 }
-            )
+            ).sheet(
+                isPresented: $createDefaultFlask,
+                content: {
+                    CreateDefaultFlask(isPresented: $createDefaultFlask).frame(
+                        width: 400, height: 100
+                    ).environment(flaskLibrary)
+                })
         }
         WindowGroup(id: "downloader") {
             DownloadView()
