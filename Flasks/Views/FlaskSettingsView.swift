@@ -5,7 +5,7 @@ struct FlaskSettingsView: View {
 
     @Binding var isPresented: Bool
 
-    @State var selectedBackend: DXTranslationLayer = .wined3d
+    @State var selectedBackend: DXTranslationLayer = .builtin
     @State var sync: WineSync = WineSync.none
     @State var error: FlaskError?
 

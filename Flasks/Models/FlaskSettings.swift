@@ -2,7 +2,7 @@ import Foundation
 
 enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
     var id: String { rawValue }
-    case wined3d = "WineD3D"
+    case builtin = "Default"
     case dxvk = "DXVK"
     case dxmt = "DXMT"
     case d3dmetal = "D3DMetal"
@@ -16,11 +16,15 @@ enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
 
     var help: String {
         switch self {
-        case .wined3d:
+        case .builtin:
             return """
-                DirectX 1-11 -> OpenGL
-                OpenGL has been deprecated by apple since 2018 so expect bad performance and glitches on older apps/games
-                DXVK or DXMT is recommended for DirectX 10 and 11 apps/games
+                WineD3D (if using Upstream wine)
+                    DirectX 1-11 -> OpenGL
+                    OpenGL has been deprecated by apple since 2018 so expect bad performance and glitches on older apps/games
+                    DXVK or DXMT is recommended for DirectX 10 and 11 apps/games
+                D3DMetal (if using GPTK)
+                    DirectX 12 -> Metal
+                    Part of Apple's Game Porting Toolkit
                 """
         case .dxvk:
             return """

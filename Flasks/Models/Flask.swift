@@ -28,7 +28,7 @@ class Flask: Codable, Identifiable {
 
     init(id: String, registeredApps: [WineApp], runner: Runner, path: URL, name: String) {
         self.id = id
-        self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .wined3d, sync: .none)
+        self.settings = FlaskSettings(prefixPath: path, dxTranslationLayer: .builtin, sync: .none)
         self.registeredApps = registeredApps
         self.runner = runner
         self.path = path
