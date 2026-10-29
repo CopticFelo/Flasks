@@ -72,7 +72,7 @@
 		AE14555E300A499D0049DACC /* Flasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2927813049FD98008D78C3 /* wrestool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = wrestool; sourceTree = "<group>"; };
 		AE292783304ABEE0008D78C3 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
-		AE40A7E0305C0DEE00230E10 /* gstreamer-1.0-1.28.7-universal.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "gstreamer-1.0-1.28.7-universal.pkg"; path = "../../../Downloads/gstreamer-1.0-1.28.7-universal.pkg"; sourceTree = "<group>"; };
+		AE40A7E0305C0DEE00230E10 /* gstreamer-1.0-1.28.7-universal.pkg */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.installer-pkg"; name = "gstreamer-1.0-1.28.7-universal.pkg"; path = "../../../Downloads/gstreamer-1.0-1.28.7-universal.pkg"; sourceTree = "<group>"; };
 		AEA10F1830438E8700E66AB1 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
 		AEA10F1A30438EFE00E66AB1 /* dxmt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dxmt; sourceTree = "<group>"; };
 		AEFAE1563044F549008FCA22 /* dxvk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dxvk; path = ../../../Downloads/dxvk; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.0.3;
+				MARKETING_VERSION = 0.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flasks.Flasks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -480,7 +480,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.0.3;
+				MARKETING_VERSION = 0.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flasks.Flasks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
