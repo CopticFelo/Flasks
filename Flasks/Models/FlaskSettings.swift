@@ -4,8 +4,6 @@ enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
     var id: String { rawValue }
     case builtin = "Default"
     case dxvk = "DXVK"
-    case dxmt = "DXMT"
-    case d3dmetal = "D3DMetal"
 
     var dlls: [String] {
         switch self {
@@ -21,7 +19,7 @@ enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
                 WineD3D (if using Upstream wine)
                     DirectX 1-11 -> OpenGL
                     OpenGL has been deprecated by apple since 2018 so expect bad performance and glitches on older apps/games
-                    DXVK or DXMT is recommended for DirectX 10 and 11 apps/games
+                    DXVK is recommended for DirectX 10 and 11 apps/games
                 D3DMetal (if using GPTK)
                     DirectX 12 -> Metal
                     Part of Apple's Game Porting Toolkit
@@ -30,19 +28,6 @@ enum DXTranslationLayer: String, Identifiable, Codable, CaseIterable {
             return """
                 DirectX 10 & 11 -> Vulkan
                 MacOS doesn't support vulkan so it's translated to Metal through MoltenVK
-                DXMT may be better in some cases but it's still in development so expect bugs
-                """
-        case .dxmt:
-            return """
-                DirectX 10 & 11 -> Metal
-                Still in development
-                Often the most preformant way to translate DirectX 10 & 11 but may be buggy
-                """
-        // NOTE: D3DMetal may need to be downloaded separately due to the license
-        case .d3dmetal:
-            return """
-                DirectX 12 -> Metal
-                Part of Apple's Game Porting Toolkit
                 """
         }
     }
