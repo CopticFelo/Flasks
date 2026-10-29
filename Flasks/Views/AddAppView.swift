@@ -1,15 +1,9 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-enum AppType {
-    case install
-    case standalone
-}
-
 struct AddAppView: View {
     var flask: Flask
 
-    @State var type: AppType = .standalone
     @State var path: String = ""
     @State var showFileDialog: Bool = false
     @State var error: FlaskError?
@@ -17,10 +11,6 @@ struct AddAppView: View {
     @Binding var showAppAddSheet: Bool
     var body: some View {
         Form {
-            Picker("App Type", selection: $type) {
-                Text("Standalone (Portable)").tag(AppType.standalone)
-                Text("Installer").tag(AppType.install)
-            }
             HStack {
                 TextField("Path", text: $path)
                 Button("Browse") {
