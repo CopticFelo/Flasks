@@ -159,9 +159,16 @@ class Flask: Codable, Identifiable {
     func runApp(_ name: String) async throws {
         let env = Environment.custom(["WINEPREFIX": path.path])
         do {
+            let utilPath = runner.binPath.deletingLastPathComponent().appending(
+                path: "lib/wine/x86_64-windows/\(name).exe"
+            ).path
+            var winePath = runner.binPath.appending(path: "/wine")
+            if !FileManager.default.fileExists(atPath: winePath.path) {
+                winePath = runner.binPath.appending(path: "/wine64")
+            }
             let result = try await run(
-                .path(FilePath(runner.binPath.appending(path: "/wine").path)),
-                arguments: [name],
+                .path(FilePath(winePath.path)),
+                arguments: [utilPath],
                 environment: env,
                 input: .none,
                 output: .sequence,
