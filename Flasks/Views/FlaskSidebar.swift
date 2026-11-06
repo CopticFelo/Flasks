@@ -48,8 +48,6 @@ struct FlaskSidebar: View {
                             }
                         }
                     ).buttonStyle(.borderless)
-                }
-                Section {
                     Button(
                         "Open winecfg", systemImage: "wrench.adjustable",
                         action: {
@@ -60,12 +58,6 @@ struct FlaskSidebar: View {
                                     self.error = error as? FlaskError
                                 }
                             }
-                        }
-                    ).buttonStyle(.borderless)
-                    Button(
-                        "Open winetricks", systemImage: "wineglass",
-                        action: {
-                            // TODO: winetricks support
                         }
                     ).buttonStyle(.borderless)
                 }
